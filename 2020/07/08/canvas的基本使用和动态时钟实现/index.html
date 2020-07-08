@@ -15,11 +15,11 @@
 <meta property="og:description" content="Canvas基础以及动态时钟的实现写在前面HTML5  元素用于图形的绘制，通过脚本 (通常是JavaScript)来完成， 标签只是图形容器，和别的标签不同，我们不在标签里面写内容，必须使用脚本来绘制图形。Canvas是一个行内块元素。 Canvas基础 画布的创建，在绘图之前我们首先是需要一张“纸”，默认情况下  元素没有边框和内容。  &lt;canvas id&#x3D;&quot;myCanvas&quot; wid">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/23068254-64c3d74d65cf0b24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://frankieqi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/source_posts%5Ccanvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0%5C%E8%A7%92%E5%BA%A6.jpg">
+<meta property="og:image" content="https://frankieqi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E8%A7%92%E5%BA%A6.jpg">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/23068254-d485ef413ff4add3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/23068254-a88d1b6d86baa376.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="article:published_time" content="2020-07-08T08:10:33.064Z">
-<meta property="article:modified_time" content="2020-07-08T08:48:35.682Z">
+<meta property="article:modified_time" content="2020-07-08T08:50:12.620Z">
 <meta property="article:author" content="FrankieQi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/23068254-64c3d74d65cf0b24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -282,7 +282,7 @@
 <p>arc(x,y,r,sAngle,eAngle,counterclockwise)</p>
 <p>x,y就是画这个弧线的圆心坐标；r为半径值；sAngle,eAngle就是起始角和结束角；<em>counterclockwise</em>是表示画的方向，false为顺时针，true为逆时针。</p>
 <p>sAngle,eAngle的具体可见下图（<strong>记住起始位置不是在上面而是在右边</strong>）</p>
-<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/source_posts%5Ccanvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0%5C%E8%A7%92%E5%BA%A6.jpg" alt></p>
+<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E8%A7%92%E5%BA%A6.jpg" alt></p>
 </li>
 </ol>
 <p>   Tip：当我们使用顺时针画和逆时针画是不同的，要注意区分,请看下面例子，只是画的方向不同，图形也不同</p>
