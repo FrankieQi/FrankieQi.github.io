@@ -5,15 +5,24 @@
   
 
   
-  <title>Hexo</title>
+  <title>10-Canvas基础以及动态时钟的实现 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://frankieqi.github.io/index.html">
+  <meta name="description" content="Canvas基础以及动态时钟的实现写在前面HTML5  元素用于图形的绘制，通过脚本 (通常是JavaScript)来完成， 标签只是图形容器，和别的标签不同，我们不在标签里面写内容，必须使用脚本来绘制图形。Canvas是一个行内块元素。 Canvas基础 画布的创建，在绘图之前我们首先是需要一张“纸”，默认情况下  元素没有边框和内容。  &lt;canvas id&#x3D;&quot;myCanvas&quot; wid">
+<meta property="og:type" content="article">
+<meta property="og:title" content="10-Canvas基础以及动态时钟的实现">
+<meta property="og:url" content="https://frankieqi.github.io/2020/07/08/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Canvas基础以及动态时钟的实现写在前面HTML5  元素用于图形的绘制，通过脚本 (通常是JavaScript)来完成， 标签只是图形容器，和别的标签不同，我们不在标签里面写内容，必须使用脚本来绘制图形。Canvas是一个行内块元素。 Canvas基础 画布的创建，在绘图之前我们首先是需要一张“纸”，默认情况下  元素没有边框和内容。  &lt;canvas id&#x3D;&quot;myCanvas&quot; wid">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://frankieqi.github.io/2020/07/08/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0.assets/P$0W%7DVL5OS8%7B4T6C097BJR.png">
+<meta property="og:image" content="https://frankieqi.github.io/2020/07/08/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0.assets/1591716315(1)-1591716522325.jpg">
+<meta property="og:image" content="https://frankieqi.github.io/2020/07/08/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0.assets/1591717097(1).jpg">
+<meta property="og:image" content="https://frankieqi.github.io/2020/07/08/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0.assets/1591718384(1).jpg">
+<meta property="article:published_time" content="2020-07-08T07:52:34.209Z">
+<meta property="article:modified_time" content="2020-07-08T07:52:37.301Z">
 <meta property="article:author" content="FrankieQi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://frankieqi.github.io/2020/07/08/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0.assets/P$0W%7DVL5OS8%7B4T6C097BJR.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -62,9 +71,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-10-Canvas基础以及动态时钟的实现" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-10-Canvas基础以及动态时钟的实现" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/08/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="article-date">
   <time datetime="2020-07-08T07:52:34.209Z" itemprop="datePublished">2020-07-08</time>
@@ -77,8 +84,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/08/10-Canvas%E5%9F%BA%E7%A1%80%E4%BB%A5%E5%8F%8A%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/">10-Canvas基础以及动态时钟的实现</a>
+    <h1 class="article-title" itemprop="name">
+      10-Canvas基础以及动态时钟的实现
     </h1>
   
 
@@ -296,60 +303,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/08/hello-world/" class="article-date">
-  <time datetime="2020-07-08T07:04:44.132Z" itemprop="datePublished">2020-07-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/08/hello-world/">Hello World</a>
-    </h1>
+    <a href="/2020/07/08/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Hello-Hexo"><a href="#Hello-Hexo" class="headerlink" title="Hello Hexo"></a>Hello Hexo</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://frankieqi.github.io/2020/07/08/hello-world/" data-id="ckcd0w7ks0000ykwk7ptm4aal" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-
 
 </section>
         
