@@ -36,6 +36,7 @@
 </li>
 <li><pre><code class="javascript"><span class="keyword">var</span> c=<span class="built_in">document</span>.getElementById(<span class="string">"myCanvas"</span>);
 <span class="keyword">var</span> ctx=c.getContext(<span class="string">"2d"</span>);
+
 &lt;!--￼<span class="number">1</span>--&gt;
 </code></pre>
 </li>
