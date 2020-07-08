@@ -85,17 +85,17 @@
 <meta property="og:url" content="https://frankieqi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Frankie Blog">
 <meta property="og:description" content="写在前面HTML5 &lt;canvas&gt; 元素用于图形的绘制，通过脚本 (通常是JavaScript)来完成，&lt;canvas&gt; 标签只是图形容器，和别的标签不同，我们不在&lt;canvas&gt;标签里面写内容，必须使用脚本来绘制图形。Canvas是一个行内块元素。 Canvas基础 画布的创建，在绘图之前我们首先是需要一张“纸”，默认情况下 &lt;canvas&gt; 元">
-<meta property="og:image" content="https://frankieqi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E4%B8%89%E8%A7%92%E5%BD%A2.jpg">
+<meta property="og:image" content="https://frankieqi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E4%B8%89%E8%A7%92%E5%BD%A2.png">
 <meta property="og:image" content="https://frankieqi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E8%A7%92%E5%BA%A6.jpg">
 <meta property="og:image" content="https://frankieqi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E5%BC%A7%E7%BA%BF.jpg">
 <meta property="og:image" content="https://frankieqi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E6%97%B6%E9%92%9F.jpg">
 <meta property="article:published_time" content="2020-07-08T08:10:33.064Z">
-<meta property="article:modified_time" content="2020-07-08T14:18:51.570Z">
+<meta property="article:modified_time" content="2020-07-08T14:22:04.053Z">
 <meta property="article:author" content="FrankieQi">
 <meta property="article:tag" content="HTML5">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://frankieqi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E4%B8%89%E8%A7%92%E5%BD%A2.jpg">
+<meta name="twitter:image" content="https://frankieqi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E4%B8%89%E8%A7%92%E5%BD%A2.png">
 
 
 
@@ -440,11 +440,10 @@
 <li><p>首先要获取到canvas元素</p>
 </li>
 <li><p>创建context对象  (这里我们可以利用判断是否有上下文对象来判断浏览器是否支持)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c=<span class="built_in">document</span>.getElementById(<span class="string">"myCanvas"</span>);</span><br><span class="line"><span class="keyword">var</span> ctx=c.getContext(<span class="string">"2d"</span>);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
-</ol>
-<ol start="3">
 <li><p>2D上下文</p>
 <ul>
 <li>使用2d绘图上下文提供的方法，可以绘制简单的2D图形，比如矩形、弧形和路径等。2D上下文的起始位置是<code>&lt;canvas&gt;</code>画布的左上角，原点坐标为（0，0）。所有的坐标值都是基于这个点计算的，x越大表示越靠右，y越大表示越靠下。大家在绘图时候可以在脑海中构建一个坐标系。width和height表示在这两个方向上可用的像素数目。</li>
@@ -540,7 +539,7 @@
 <p>实例：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;canvas id=<span class="string">"canvas"</span> width=<span class="string">"200"</span> height=<span class="string">"200"</span>&gt;&lt;<span class="regexp">/canvas&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">var</span> convas = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line">    <span class="keyword">var</span> ctx = convas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">    ctx.moveTo(<span class="number">100</span>, <span class="number">100</span>);</span><br><span class="line">    ctx.lineTo(<span class="number">150</span>, <span class="number">150</span>);</span><br><span class="line">    ctx.lineTo(<span class="number">80</span>, <span class="number">150</span>);</span><br><span class="line">    ctx.lineWidth = <span class="number">5</span>;</span><br><span class="line">    ctx.strokeStyle = <span class="string">"#ccc"</span>;</span><br><span class="line">    ctx.stroke()</span><br><span class="line">    ctx.fill()</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E4%B8%89%E8%A7%92%E5%BD%A2.jpg" alt></p>
+<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E4%B8%89%E8%A7%92%E5%BD%A2.png" alt="三角形"></p>
 </li>
 </ol>
 <ol start="5">
