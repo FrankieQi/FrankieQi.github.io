@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/07/08/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Hello-Hexo"><a href="#Hello-Hexo" class="headerlink" title="Hello Hexo"></a>Hello Hexo</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>canvas的基本使用和动态时钟实现</title>
+    <url>/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>HTML5 <code>&lt;canvas&gt;</code> 元素用于图形的绘制，通过脚本 (通常是JavaScript)来完成，<code>&lt;canvas&gt;</code> 标签只是图形容器，和别的标签不同，我们不在<code>&lt;canvas&gt;</code>标签里面写内容，必须使用脚本来绘制图形。Canvas是一个行内块元素。</p>
+<h4 id="Canvas基础"><a href="#Canvas基础" class="headerlink" title="Canvas基础"></a>Canvas基础</h4><ol>
+<li><p>画布的创建，在绘图之前我们首先是需要一张“纸”，默认情况下 <code>&lt;canvas&gt;</code> 元素没有边框和内容。</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;canvas id=<span class="string">"myCanvas"</span> width=<span class="string">"200"</span> height=<span class="string">"100"</span>&gt;&lt;<span class="regexp">/canvas&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>  标签通常需要指定一个id属性 (脚本中经常引用), width 和 height 属性定义的画布的大小</p>
+<a id="more"></a></li>
+<li><p>在<code>&lt;canvas&gt;</code>上绘制</p>
+<ul>
+<li><p>首先要获取到canvas元素</p>
+</li>
+<li><p>创建context对象  (这里我们可以利用判断是否有上下文对象来判断浏览器是否支持)</p>
+</li>
+<li><pre><code class="javascript"><span class="keyword">var</span> c=<span class="built_in">document</span>.getElementById(<span class="string">"myCanvas"</span>);
+<span class="keyword">var</span> ctx=c.getContext(<span class="string">"2d"</span>);
+&lt;!--￼<span class="number">1</span>--&gt;
+</code></pre>
+</li>
+</ul>
+<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E4%B8%89%E8%A7%92%E5%BD%A2.jpg" alt></p>
+</li>
+</ol>
+<ol start="5">
+<li><p>文本、转化和保存</p>
+<ul>
+<li><p>文本</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>font</td>
+<td>设置或返回文本内容的当前字体属性</td>
+<td>font-style、font-variant、font-weight</td>
+</tr>
+<tr>
+<td>textAlign</td>
+<td>设置或返回文本内容的当前对齐方式</td>
+<td>center、left、right、start、end</td>
+</tr>
+<tr>
+<td>textBaseline</td>
+<td>设置或返回在绘制文本时使用的当前文本基线</td>
+<td>middle、top、buttom</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>转化</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>scale()</td>
+<td>缩放当前绘图至更大或更小</td>
+<td>scalewidth：缩放当前绘图的宽度（1=100%）；scaleheight：缩放当前绘图的高度</td>
+</tr>
+<tr>
+<td>rotate()</td>
+<td>旋转当前绘图</td>
+<td>angle：角度</td>
+</tr>
+<tr>
+<td>transalte()</td>
+<td>重新映射画布上的 (0,0) 位置</td>
+<td>坐标（x,y）</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>保存</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>save()</td>
+<td>保存当前环境的状态</td>
+<td>无</td>
+</tr>
+<tr>
+<td>restore()</td>
+<td>返回之前保存过的路径状态和属性</td>
+<td>无</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>绘制弧线的方法（利用arc()方法）</p>
+<p>arc(x,y,r,sAngle,eAngle,counterclockwise)</p>
+<p>x,y就是画这个弧线的圆心坐标；r为半径值；sAngle,eAngle就是起始角和结束角；<em>counterclockwise</em>是表示画的方向，false为顺时针，true为逆时针。</p>
+<p>sAngle,eAngle的具体可见下图（<strong>记住起始位置不是在上面而是在右边</strong>）</p>
+<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E8%A7%92%E5%BA%A6.jpg" alt></p>
+</li>
+</ol>
+<p>   Tip：当我们使用顺时针画和逆时针画是不同的，要注意区分,请看下面例子，只是画的方向不同，图形也不同</p>
+   <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> convas = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">var</span> ctx = convas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">ctx.beginPath()</span><br><span class="line">ctx.arc(<span class="number">100</span>, <span class="number">100</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="number">1.5</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>) <span class="comment">//顺时针画法</span></span><br><span class="line">ctx.stroke()</span><br><span class="line">ctx.closePath()</span><br><span class="line">ctx.beginPath()</span><br><span class="line">ctx.arc(<span class="number">200</span>, <span class="number">100</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="number">1.5</span> * <span class="built_in">Math</span>.PI, <span class="literal">true</span>)<span class="comment">//逆时针画法</span></span><br><span class="line">ctx.stroke()</span><br><span class="line">ctx.closePath()</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E5%BC%A7%E7%BA%BF.jpg" alt></p>
+<h4 id="动态时钟案例"><a href="#动态时钟案例" class="headerlink" title="动态时钟案例"></a>动态时钟案例</h4><p>原理：通过canvas绘制时钟的每一个线段，在把当前时间写入到绘图函数中，每一秒钟调用一次绘图函数，就可以实现时钟动态化</p>
+<p>源码如下：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>动态时钟<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-id">#clock</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">border</span>: 1<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-id">#ccc</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        div &#123;</span><br><span class="line">            text-align: center;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"clock"</span> <span class="attr">width</span>=<span class="string">"200px"</span> <span class="attr">height</span>=<span class="string">"200px"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> clo = <span class="built_in">document</span>.getElementById(<span class="string">'clock'</span>);</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> ctx = clo.getContext(<span class="string">'2d'</span>);</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> width = ctx.canvas.width;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> height = ctx.canvas.height;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> r = width / <span class="number">2</span>; <span class="comment">//半径</span></span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawBackground</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">            ctx.save(); <span class="comment">//为了保存清除之前时钟的环境</span></span></span><br><span class="line"><span class="actionscript">            ctx.translate(r, r); <span class="comment">//切换中心点,此时（0，0）就在最中心了，不再是在左上角</span></span></span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="actionscript">            ctx.lineWidth = <span class="number">8</span>;<span class="comment">//线条的宽度</span></span></span><br><span class="line"><span class="javascript">            ctx.arc(<span class="number">0</span>, <span class="number">0</span>, r - <span class="number">4</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>)<span class="comment">//绘制最外圆</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line"><span class="actionscript">            <span class="comment">//画小时数</span></span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> hourNumber = [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">1</span>, <span class="number">2</span>];</span></span><br><span class="line"><span class="actionscript">            ctx.font = <span class="string">'18px Arial'</span>; <span class="comment">//设置文本大小</span></span></span><br><span class="line"><span class="actionscript">            ctx.textAlign = <span class="string">'center'</span>; <span class="comment">//文本居中</span></span></span><br><span class="line"><span class="actionscript">            ctx.textBaseline = <span class="string">'middle'</span>;</span></span><br><span class="line"><span class="actionscript">            hourNumber.forEach(<span class="function"><span class="keyword">function</span><span class="params">(number, i)</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">                <span class="comment">//求出每一个对应的弧度</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">12</span> * i;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> x = <span class="built_in">Math</span>.cos(rad) * (r - <span class="number">30</span>);<span class="comment">//算出每个数字对应的坐标</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> y = <span class="built_in">Math</span>.sin(rad) * (r - <span class="number">30</span>);</span></span><br><span class="line"><span class="actionscript">                ctx.fillText(number, x, y) <span class="comment">//填充文本</span></span></span><br><span class="line">            &#125;);</span><br><span class="line"><span class="actionscript">            <span class="comment">//画每分钟对应的小点点</span></span></span><br><span class="line"><span class="actionscript">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">60</span>; i++) &#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">60</span> * i;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> x = <span class="built_in">Math</span>.cos(rad) * (r - <span class="number">10</span>);</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> y = <span class="built_in">Math</span>.sin(rad) * (r - <span class="number">10</span>);</span></span><br><span class="line">                ctx.beginPath();</span><br><span class="line"><span class="actionscript">                <span class="keyword">if</span> (i % <span class="number">5</span> === <span class="number">0</span>) &#123; <span class="comment">//被5整除也就是小时数</span></span></span><br><span class="line"><span class="actionscript">                    ctx.fillStyle = <span class="string">"#000"</span>; <span class="comment">//要加上，否则由于canvas是基于状态的，所以会把													这里的颜色也改成#ccc</span></span></span><br><span class="line"><span class="javascript">                    ctx.arc(x, y, <span class="number">2.5</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">true</span>)</span></span><br><span class="line"><span class="actionscript">                &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="actionscript">                    ctx.fillStyle = <span class="string">"#ccc"</span></span></span><br><span class="line"><span class="javascript">                    ctx.arc(x, y, <span class="number">1.5</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">true</span>)</span></span><br><span class="line">                &#125;</span><br><span class="line">                ctx.fill()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawHour</span><span class="params">(hour, minute)</span> </span>&#123;<span class="comment">//画时针函数</span></span></span><br><span class="line"><span class="actionscript">            ctx.save(); <span class="comment">//保存画小时之前的环境</span></span></span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">12</span> * hour; <span class="comment">//每一个小时要旋转的弧度</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> mrad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">12</span> / <span class="number">60</span> * minute; <span class="comment">//分钟数移动的弧度</span></span></span><br><span class="line"><span class="actionscript">            ctx.rotate(rad + mrad); <span class="comment">//画布的旋转</span></span></span><br><span class="line">            ctx.lineWidth = 5;</span><br><span class="line"><span class="actionscript">            ctx.moveTo(<span class="number">0</span>, <span class="number">10</span>); <span class="comment">//移动原点到原点的下面一点，作为画时针的起始位置</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineTo(<span class="number">0</span>, -r / <span class="number">2</span>); <span class="comment">//原点的位置在中心所以往上画要是负数</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineCap = <span class="string">'round'</span>; <span class="comment">//设置线条的结尾形状</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line"><span class="actionscript">            ctx.restore(); <span class="comment">//返回画小时之前的画布的保存过的路径和属性状态</span></span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawMinute</span><span class="params">(minute)</span> </span>&#123;<span class="comment">//画分针函数</span></span></span><br><span class="line"><span class="actionscript">            <span class="comment">//为了区分开画布环境</span></span></span><br><span class="line">            ctx.save();</span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">60</span> * minute; <span class="comment">//每一个小时要旋转的弧度</span></span></span><br><span class="line"><span class="actionscript">            ctx.rotate(rad); <span class="comment">//画布的旋转</span></span></span><br><span class="line">            ctx.lineWidth = 3;</span><br><span class="line"><span class="actionscript">            ctx.moveTo(<span class="number">0</span>, <span class="number">10</span>); <span class="comment">//移动原点到原点的下面一点，作为画时针的起始位置</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineTo(<span class="number">0</span>, -r + <span class="number">20</span>); <span class="comment">//原点的位置在中心所以往上画要是负数,值越大画的越短</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineCap = <span class="string">'round'</span>; <span class="comment">//设置线条的结尾形状</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line">            ctx.restore();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawSecond</span><span class="params">(second)</span> </span>&#123;<span class="comment">//画秒针函数</span></span></span><br><span class="line">            ctx.save();</span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">60</span> * second; <span class="comment">//每一个小时要旋转的弧度</span></span></span><br><span class="line"><span class="actionscript">            ctx.rotate(rad); <span class="comment">//画布的旋转</span></span></span><br><span class="line">            ctx.lineWidth = 2;</span><br><span class="line"><span class="actionscript">            ctx.strokeStyle = <span class="string">"red"</span></span></span><br><span class="line"><span class="actionscript">            ctx.moveTo(<span class="number">0</span>, <span class="number">10</span>); <span class="comment">//移动原点到原点的下面一点，作为画时针的起始位置</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineTo(<span class="number">0</span>, -r + <span class="number">20</span>); <span class="comment">//原点的位置在中心所以往上画要是负数,值越大画的越短</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineCap = <span class="string">'round'</span>; <span class="comment">//设置线条的结尾形状</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line">            ctx.restore();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawDot</span><span class="params">()</span> </span>&#123;<span class="comment">//画中心点</span></span></span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="actionscript">            ctx.fillStyle = <span class="string">"#fff"</span></span></span><br><span class="line"><span class="javascript">            ctx.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>)</span></span><br><span class="line">            ctx.fill()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;<span class="comment">//绘图函数</span></span></span><br><span class="line"><span class="actionscript">            ctx.clearRect(<span class="number">0</span>, <span class="number">0</span>, width, height); <span class="comment">//每秒清除一次canvas再画出时分秒</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> hour = date.getHours();</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> minute = date.getMinutes();</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> second = date.getSeconds();</span></span><br><span class="line">            drawBackground()</span><br><span class="line">            drawHour(hour, minute);</span><br><span class="line">            drawMinute(minute);</span><br><span class="line">            drawSecond(second);</span><br><span class="line">            drawDot()</span><br><span class="line"><span class="actionscript">            ctx.restore(); <span class="comment">//画完之后</span></span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        draw(); <span class="comment">//避免第一秒无效果</span></span></span><br><span class="line"><span class="actionscript">        setInterval(draw, <span class="number">1000</span>);<span class="comment">//定时器函数每秒调用一次</span></span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>实现结果：</p>
+<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E6%97%B6%E9%92%9F.jpg" alt="时钟特效"></p>
+]]></content>
+      <categories>
+        <category>HTML</category>
+      </categories>
+      <tags>
+        <tag>HTML5</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+</search>
