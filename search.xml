@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2020/03/18/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Hello-Hexo"><a href="#Hello-Hexo" class="headerlink" title="Hello Hexo"></a>Hello Hexo</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>JS中的隐式转换</title>
     <url>/2020/05/15/JS%E4%B8%AD%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/</url>
     <content><![CDATA[<h2 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>在JS中有一个在学习过程和面试过程中很常见的问题就是JS的隐式转换，经常会有各种各样的“坑”等着我们去踩。下面我结合个人学习过程遇到的问题简单谈谈。另一种转换方式是显示转换，感兴趣的小伙伴可点击跳转我之前写的文章。</p>
@@ -179,6 +161,182 @@
 </ol>
 <hr>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>使用该种方法的局限性确实是比较大，又比较难以理解，所以我个人也很少会用到，如果说想用这种方法，但是没有效果，首先你需要确定父元素的基线在哪里，根据baseline来进行调整，其次，你需要在检查你的元素是否是inline水平和table-cell元素，这是该元素应用范围。</p>
+]]></content>
+      <categories>
+        <category>HTML</category>
+        <category>CSS</category>
+      </categories>
+      <tags>
+        <tag>CSS</tag>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JS中的显式转换</title>
+    <url>/2020/05/09/JS%E4%B8%AD%E7%9A%84%E6%98%BE%E5%BC%8F%E8%BD%AC%E6%8D%A2/</url>
+    <content><![CDATA[<h3 id="显示转换"><a href="#显示转换" class="headerlink" title="显示转换"></a>显示转换</h3><p>显示转换一般指使用Number、String和Boolean三个构造函数，手动将各种类型的值，转换成数字、字符串或者布尔值。</p>
+<h4 id="布尔型转换"><a href="#布尔型转换" class="headerlink" title="布尔型转换"></a>布尔型转换</h4><ol>
+<li><p>ECMAScript中所有类型的值都有与Boolean值（true和false）等价的值。要将一个值转换为其对应的Boolean值，可以调用转型函数Boolean（）。</p>
+<table>
+<thead>
+<tr>
+<th align="center">数据类型</th>
+<th align="center">转换为true</th>
+<th align="center">转换为false</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">String</td>
+<td align="center">任何非空字符串</td>
+<td align="center">空字符串</td>
+</tr>
+<tr>
+<td align="center">Number</td>
+<td align="center">任何非零数字值</td>
+<td align="center">0和NaN</td>
+</tr>
+<tr>
+<td align="center">Object</td>
+<td align="center">任何对象</td>
+<td align="center">null</td>
+</tr>
+<tr>
+<td align="center">Undefined</td>
+<td align="center">不适用</td>
+<td align="center">undefined</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<a id="more"></a>
+<ol start="2">
+<li><p>举例说明</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Boolean</span>(<span class="literal">null</span>);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="literal">undefined</span>);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="string">""</span>);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="number">0</span>);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(&#123;&#125;);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">Boolean</span>([]);<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="数值转换"><a href="#数值转换" class="headerlink" title="数值转换"></a>数值转换</h4><p>有三个函数可以把非数值转换为数值：Number()、parseInt()、parseFloat()</p>
+<ol>
+<li><p><strong>Number()</strong></p>
+<p>Number()函数的转换规则：</p>
+<p>（1）如是布尔值，true转换为1，false转换为0</p>
+<p>（2）如是null，返回0</p>
+<p>（3）如是undefined，返回NaN</p>
+<p>（4）如是字符串，规则：</p>
+<ul>
+<li>如字符串中只包含数字（包括前面带正负号的情况），将其转换为十进制数值</li>
+<li>如字符串中包含有效的浮点格式，将其转换为对应的浮动数值</li>
+<li>如字符串中包含有效的十六进制格式，例如“oxf”，将其转换为相同大小的十进制整数值</li>
+<li>如字符串为空，转换为0</li>
+<li>如字符中包含除上述格式之外的字符，将其转换为NaN</li>
+</ul>
+<p>（5）<strong>如果是对象，自动调用对象的valueOf()方法，再依照前面的规则转换返回的值，如果转换结果为NaN，调用对象的toString()方法，再依照前面的规则转换</strong></p>
+<ul>
+<li><p>valueOf():JavaScript调用valueOf方法将对象转换为原始值。你很少需要自己调用<code>valueOf</code>方法；当遇到要预期的原始值的对象时，JavaScript会自动调用它。</p>
+</li>
+<li><p>不同类型对象返回valueOf()方法的返回值</p>
+<table>
+<thead>
+<tr>
+<th align="center">对象</th>
+<th align="center">返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Array.valueOf()</td>
+<td align="center">返回数组对象本身。</td>
+</tr>
+<tr>
+<td align="center">Boolean.valueOf()</td>
+<td align="center">布尔值。</td>
+</tr>
+<tr>
+<td align="center">Date.valueOf()</td>
+<td align="center">存储的时间是从 1970 年 1 月 1 日午夜开始计的毫秒数。</td>
+</tr>
+<tr>
+<td align="center">Function.valueOf()</td>
+<td align="center">函数本身。</td>
+</tr>
+<tr>
+<td align="center">Number.valueOf()</td>
+<td align="center">数字值。</td>
+</tr>
+<tr>
+<td align="center">Object.valueOf()</td>
+<td align="center">对象本身。这是默认情况。</td>
+</tr>
+<tr>
+<td align="center">String.valueOf()</td>
+<td align="center">字符串值。</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"abc"</span>));<span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"12ad"</span>));<span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"12"</span>));<span class="comment">//12</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"1.1"</span>));<span class="comment">//1.1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">true</span>));<span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">false</span>));<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">null</span>));<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">undefined</span>));<span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">" "</span>));<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">""</span>));<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"0xf"</span>));<span class="comment">//15</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"0070"</span>));<span class="comment">//70</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>parseInt()函数</strong>　　</p>
+<p>规则：</p>
+<p>（1）第一个参数是要解析的字符串，只会解析从第一个字符到不是数字的字符</p>
+<p>（2）忽略字符串前面的空格，直到找到第一个非空格字符，如果第一个字符不是数字或者负号，会返回NaN，用parseInt()转换空字符串会返回NaN</p>
+<p>（3）如果字符串以“ox”开头，且后跟数字字符，会当作一个十六进制整数</p>
+<p>（4）第二个参数表示转换时使用的基数（多少进制），进制范围是2到36，没写该参数时默认是10进制</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'22e3'</span>))<span class="comment">//22</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'e3'</span>))<span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="number">10.59</span>))<span class="comment">//10</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="number">1</span>,<span class="number">2</span>))<span class="comment">//1,1在2的进制范围内，所以能取到</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="number">3</span>,<span class="number">2</span>))<span class="comment">//NaN,3不在2的进制范围内，所以不能取到</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="number">0x99</span>))<span class="comment">//153</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>parseFloat()函数</strong>　</p>
+<p>（1）与parseInt()函数类似，也是从第一个字符开始解析每个字符，一直解析到字符串末尾，或解析到遇到一个无效的浮点数字字符为止。能够解析小数点，而parseInt()只能取到小数点前面的值</p>
+<p>（2）字符串中的第一个小数点是有效的，第二个小数点就无效了</p>
+<p>（3）只能解析十进制数，没有第二个参数</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">"10qq"</span>));<span class="comment">//10</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">"10.5"</span>));<span class="comment">//10.5</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">"0xAF"</span>));<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">"23.1.4"</span>));<span class="comment">//23.1</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="字符串转换"><a href="#字符串转换" class="headerlink" title="字符串转换"></a>字符串转换</h4><ol>
+<li><p>toString()方法</p>
+<p>（1）可以将其他类型的转成字符串型。数值、布尔值、对象和字符串值都有toString()方法。但null和undefined没有这个方法</p>
+<p>（2）可以传递一个参数：输出数值的基数。通过传递参数，可以输出二进制、八进制、十六进制及其他有效进制格式表示的字符串值</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> age=<span class="number">11</span>;</span><br><span class="line"><span class="built_in">console</span>.log(age.toString());<span class="comment">//"11"</span></span><br><span class="line"><span class="keyword">var</span> b1=<span class="literal">true</span>;</span><br><span class="line"><span class="built_in">console</span>.log(b1.toString());<span class="comment">//"true"</span></span><br><span class="line"><span class="keyword">var</span> num=<span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(num.toString());<span class="comment">//"10"，默认是10进制</span></span><br><span class="line"><span class="built_in">console</span>.log(num.toString(<span class="number">2</span>));<span class="comment">//"1010",将num转成2进制</span></span><br><span class="line"><span class="built_in">console</span>.log(num.toString(<span class="number">8</span>));<span class="comment">//"12",将num转成8进制</span></span><br><span class="line"><span class="built_in">console</span>.log(num.toString(<span class="number">10</span>));<span class="comment">//"10"</span></span><br><span class="line"><span class="built_in">console</span>.log(num.toString(<span class="number">16</span>));<span class="comment">//"a"</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>string()方法</p>
+<p>null和undefined转成字符串的方法,对其他类型也适用</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> value1=<span class="number">10</span>;</span><br><span class="line"><span class="keyword">var</span> value2=<span class="literal">true</span>;</span><br><span class="line"><span class="keyword">var</span> value3=<span class="literal">null</span>;</span><br><span class="line"><span class="keyword">var</span> value4;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(value1));<span class="comment">//"10"</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(value2));<span class="comment">//"true"</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(value3));<span class="comment">//"null"</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(value4));<span class="comment">//"undefined"</span></span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Javascript</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>css也可以这么美之登录页面</title>
+    <url>/2020/05/26/css%E4%B9%9F%E5%8F%AF%E4%BB%A5%E8%BF%99%E4%B9%88%E7%BE%8E%E4%B9%8B%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在前端学习中，有”三大山脉“分别是html+css+javascript相信每个学前端的小伙伴都学习过，但是很多人却都不知道用纯css也可以写出非常好看的页面来，今天写了一个简单的登录页面和各位小伙伴交流学习。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><a id="more"></a>
+<p>HTML代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 引入图标和页面css文件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"icon.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"login.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>LOGIN<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"image"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 图片大家可以自选电脑里任意，以写好调整图片大小css代码 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"./imageM.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"login"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"header"</span>&gt;</span></span><br><span class="line">            LOGIN</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-border"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"border"</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">placeholder</span>=<span class="string">"username"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-border"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">class</span>=<span class="string">"border"</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">placeholder</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"action"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"btn-login"</span>&gt;</span>login<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"icon"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont icon-qq"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont icon-weibo"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont icon-weixin"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>CSS代码：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">html</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">'Segoe UI'</span>, Tahoma, Geneva, Verdana, sans-serif;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="comment">/*实现块级元素垂直居中*/</span></span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.image</span> <span class="selector-tag">img</span> &#123;</span><br><span class="line">    <span class="comment">/*实现图片自适应屏幕大小*/</span></span><br><span class="line">    <span class="attribute">position</span>: fixed;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">z-index</span>: -<span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">41</span>, <span class="number">45</span>, <span class="number">62</span>, <span class="number">0.7</span>);</span><br><span class="line">    <span class="attribute">color</span>: aliceblue;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">8px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.header</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">30px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.input</span> <span class="selector-tag">input</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgb</span>(<span class="number">41</span>, <span class="number">45</span>, <span class="number">62</span>);</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">0px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">15px</span>;</span><br><span class="line">    <span class="attribute">color</span>: aliceblue;</span><br><span class="line">    <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.input</span> <span class="selector-tag">input</span><span class="selector-pseudo">::placeholder</span> &#123;</span><br><span class="line">    <span class="attribute">text-transform</span>: uppercase;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.input-border</span> &#123;</span><br><span class="line">    <span class="comment">/*实现颜色从左到右渐变效果*/</span></span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(to right, #e8198b, #<span class="number">3</span>B65BB);</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">45px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">    <span class="attribute">transition</span>: .<span class="number">3s</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.input-border</span> <span class="selector-class">.border</span> &#123;</span><br><span class="line">    <span class="comment">/*这里使用了css3的calc()方法用于自动计算宽高*/</span></span><br><span class="line">    <span class="attribute">height</span>: <span class="built_in">calc</span>(<span class="number">100%</span> - <span class="number">4px</span>);</span><br><span class="line">    <span class="attribute">width</span>: <span class="built_in">calc</span>(<span class="number">100%</span> - <span class="number">4px</span>);</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.btn-login</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">60%</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">2px</span> solid <span class="number">#3B65BB</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">40px</span>;</span><br><span class="line">    <span class="attribute">text-transform</span>: uppercase;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    <span class="attribute">transition</span>: .<span class="number">3s</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.btn-login</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#3B65BB</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.icon</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">60%</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">18px</span>;</span><br><span class="line">    <span class="attribute">border-top</span>: <span class="number">1px</span> dashed <span class="number">#eee</span>;</span><br><span class="line">    <span class="attribute">padding-top</span>: <span class="number">13px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.icon</span> <span class="selector-tag">i</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgb</span>(<span class="number">187</span>, <span class="number">187</span>, <span class="number">187</span>);</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="效果图："><a href="#效果图：" class="headerlink" title="效果图："></a>效果图：</h3><p><img src="/2020/05/26/css%E4%B9%9F%E5%8F%AF%E4%BB%A5%E8%BF%99%E4%B9%88%E7%BE%8E%E4%B9%8B%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2/login.jpg" alt="Login"></p>
+<h3 id="学习总结"><a href="#学习总结" class="headerlink" title="学习总结"></a>学习总结</h3><p>本次学习主要是对页面布局的练手进一步加深对前端学习的兴趣以及对css的复习。同时对比较生疏的calc()方法进行学习。</p>
+<p>calc()从字面我们可以把他理解为一个函数function，是css3的一个新增的功能，用来指定元素的长度。calc()最大的好处就是用在流体布局上，可以通过calc()计算动态得到元素的宽度。比如说“width:calc(50%+2em)”，这样一来你就不用考虑元素DIV的宽度值到底是多少，而把这个烦人的任务交由浏览器去计算。</p>
+<p> <strong>calc()的运算规则</strong></p>
+<ol>
+<li>使用“+”、“-”、“*”和“/”四则运算</li>
+<li>可以使用百分比、px、em、rem等单位</li>
+<li>可以混合使用各种单位进行计算</li>
+<li>表达式中有“+”和“-”时，其前后必须要有空格</li>
+<li>表达式中有“*”和“/”时，其前后可以没有空格，但建议留有空格</li>
+</ol>
 ]]></content>
       <categories>
         <category>HTML</category>
@@ -411,147 +569,64 @@
       </tags>
   </entry>
   <entry>
-    <title>JS中的显式转换</title>
-    <url>/2020/05/09/JS%E4%B8%AD%E7%9A%84%E6%98%BE%E5%BC%8F%E8%BD%AC%E6%8D%A2/</url>
-    <content><![CDATA[<h3 id="显示转换"><a href="#显示转换" class="headerlink" title="显示转换"></a>显示转换</h3><p>显示转换一般指使用Number、String和Boolean三个构造函数，手动将各种类型的值，转换成数字、字符串或者布尔值。</p>
-<h4 id="布尔型转换"><a href="#布尔型转换" class="headerlink" title="布尔型转换"></a>布尔型转换</h4><ol>
-<li><p>ECMAScript中所有类型的值都有与Boolean值（true和false）等价的值。要将一个值转换为其对应的Boolean值，可以调用转型函数Boolean（）。</p>
-<table>
-<thead>
-<tr>
-<th align="center">数据类型</th>
-<th align="center">转换为true</th>
-<th align="center">转换为false</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">String</td>
-<td align="center">任何非空字符串</td>
-<td align="center">空字符串</td>
-</tr>
-<tr>
-<td align="center">Number</td>
-<td align="center">任何非零数字值</td>
-<td align="center">0和NaN</td>
-</tr>
-<tr>
-<td align="center">Object</td>
-<td align="center">任何对象</td>
-<td align="center">null</td>
-</tr>
-<tr>
-<td align="center">Undefined</td>
-<td align="center">不适用</td>
-<td align="center">undefined</td>
-</tr>
-</tbody></table>
-</li>
-</ol>
+    <title>Hello World</title>
+    <url>/2020/03/18/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Hello-Hexo"><a href="#Hello-Hexo" class="headerlink" title="Hello Hexo"></a>Hello Hexo</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<ol start="2">
-<li><p>举例说明</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Boolean</span>(<span class="literal">null</span>);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="literal">undefined</span>);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="string">""</span>);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="number">0</span>);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">Boolean</span>(&#123;&#125;);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">Boolean</span>([]);<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
-<h4 id="数值转换"><a href="#数值转换" class="headerlink" title="数值转换"></a>数值转换</h4><p>有三个函数可以把非数值转换为数值：Number()、parseInt()、parseFloat()</p>
-<ol>
-<li><p><strong>Number()</strong></p>
-<p>Number()函数的转换规则：</p>
-<p>（1）如是布尔值，true转换为1，false转换为0</p>
-<p>（2）如是null，返回0</p>
-<p>（3）如是undefined，返回NaN</p>
-<p>（4）如是字符串，规则：</p>
-<ul>
-<li>如字符串中只包含数字（包括前面带正负号的情况），将其转换为十进制数值</li>
-<li>如字符串中包含有效的浮点格式，将其转换为对应的浮动数值</li>
-<li>如字符串中包含有效的十六进制格式，例如“oxf”，将其转换为相同大小的十进制整数值</li>
-<li>如字符串为空，转换为0</li>
-<li>如字符中包含除上述格式之外的字符，将其转换为NaN</li>
-</ul>
-<p>（5）<strong>如果是对象，自动调用对象的valueOf()方法，再依照前面的规则转换返回的值，如果转换结果为NaN，调用对象的toString()方法，再依照前面的规则转换</strong></p>
-<ul>
-<li><p>valueOf():JavaScript调用valueOf方法将对象转换为原始值。你很少需要自己调用<code>valueOf</code>方法；当遇到要预期的原始值的对象时，JavaScript会自动调用它。</p>
-</li>
-<li><p>不同类型对象返回valueOf()方法的返回值</p>
-<table>
-<thead>
-<tr>
-<th align="center">对象</th>
-<th align="center">返回值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Array.valueOf()</td>
-<td align="center">返回数组对象本身。</td>
-</tr>
-<tr>
-<td align="center">Boolean.valueOf()</td>
-<td align="center">布尔值。</td>
-</tr>
-<tr>
-<td align="center">Date.valueOf()</td>
-<td align="center">存储的时间是从 1970 年 1 月 1 日午夜开始计的毫秒数。</td>
-</tr>
-<tr>
-<td align="center">Function.valueOf()</td>
-<td align="center">函数本身。</td>
-</tr>
-<tr>
-<td align="center">Number.valueOf()</td>
-<td align="center">数字值。</td>
-</tr>
-<tr>
-<td align="center">Object.valueOf()</td>
-<td align="center">对象本身。这是默认情况。</td>
-</tr>
-<tr>
-<td align="center">String.valueOf()</td>
-<td align="center">字符串值。</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"abc"</span>));<span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"12ad"</span>));<span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"12"</span>));<span class="comment">//12</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"1.1"</span>));<span class="comment">//1.1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">true</span>));<span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">false</span>));<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">null</span>));<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">undefined</span>));<span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">" "</span>));<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">""</span>));<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"0xf"</span>));<span class="comment">//15</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">"0070"</span>));<span class="comment">//70</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>parseInt()函数</strong>　　</p>
-<p>规则：</p>
-<p>（1）第一个参数是要解析的字符串，只会解析从第一个字符到不是数字的字符</p>
-<p>（2）忽略字符串前面的空格，直到找到第一个非空格字符，如果第一个字符不是数字或者负号，会返回NaN，用parseInt()转换空字符串会返回NaN</p>
-<p>（3）如果字符串以“ox”开头，且后跟数字字符，会当作一个十六进制整数</p>
-<p>（4）第二个参数表示转换时使用的基数（多少进制），进制范围是2到36，没写该参数时默认是10进制</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'22e3'</span>))<span class="comment">//22</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'e3'</span>))<span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="number">10.59</span>))<span class="comment">//10</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="number">1</span>,<span class="number">2</span>))<span class="comment">//1,1在2的进制范围内，所以能取到</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="number">3</span>,<span class="number">2</span>))<span class="comment">//NaN,3不在2的进制范围内，所以不能取到</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="number">0x99</span>))<span class="comment">//153</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>parseFloat()函数</strong>　</p>
-<p>（1）与parseInt()函数类似，也是从第一个字符开始解析每个字符，一直解析到字符串末尾，或解析到遇到一个无效的浮点数字字符为止。能够解析小数点，而parseInt()只能取到小数点前面的值</p>
-<p>（2）字符串中的第一个小数点是有效的，第二个小数点就无效了</p>
-<p>（3）只能解析十进制数，没有第二个参数</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">"10qq"</span>));<span class="comment">//10</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">"10.5"</span>));<span class="comment">//10.5</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">"0xAF"</span>));<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">"23.1.4"</span>));<span class="comment">//23.1</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
-<h4 id="字符串转换"><a href="#字符串转换" class="headerlink" title="字符串转换"></a>字符串转换</h4><ol>
-<li><p>toString()方法</p>
-<p>（1）可以将其他类型的转成字符串型。数值、布尔值、对象和字符串值都有toString()方法。但null和undefined没有这个方法</p>
-<p>（2）可以传递一个参数：输出数值的基数。通过传递参数，可以输出二进制、八进制、十六进制及其他有效进制格式表示的字符串值</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> age=<span class="number">11</span>;</span><br><span class="line"><span class="built_in">console</span>.log(age.toString());<span class="comment">//"11"</span></span><br><span class="line"><span class="keyword">var</span> b1=<span class="literal">true</span>;</span><br><span class="line"><span class="built_in">console</span>.log(b1.toString());<span class="comment">//"true"</span></span><br><span class="line"><span class="keyword">var</span> num=<span class="number">10</span>;</span><br><span class="line"><span class="built_in">console</span>.log(num.toString());<span class="comment">//"10"，默认是10进制</span></span><br><span class="line"><span class="built_in">console</span>.log(num.toString(<span class="number">2</span>));<span class="comment">//"1010",将num转成2进制</span></span><br><span class="line"><span class="built_in">console</span>.log(num.toString(<span class="number">8</span>));<span class="comment">//"12",将num转成8进制</span></span><br><span class="line"><span class="built_in">console</span>.log(num.toString(<span class="number">10</span>));<span class="comment">//"10"</span></span><br><span class="line"><span class="built_in">console</span>.log(num.toString(<span class="number">16</span>));<span class="comment">//"a"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li><p>string()方法</p>
-<p>null和undefined转成字符串的方法,对其他类型也适用</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> value1=<span class="number">10</span>;</span><br><span class="line"><span class="keyword">var</span> value2=<span class="literal">true</span>;</span><br><span class="line"><span class="keyword">var</span> value3=<span class="literal">null</span>;</span><br><span class="line"><span class="keyword">var</span> value4;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(value1));<span class="comment">//"10"</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(value2));<span class="comment">//"true"</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(value3));<span class="comment">//"null"</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(value4));<span class="comment">//"undefined"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>nodemon安装失败解决方案</title>
+    <url>/2020/06/10/nodemon%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>在前端学习过程中想必都会学习node.js吧，在node.js中有一个第三方模块nodemon尤为重要，它可以实现监听代码文件的变动，当代码改变之后，自动重启，就不用我们每修改一次代码就要手动重启，大大提高了工作的效率。但是安装过程中经常会出错，需要我们自行去解决。</p>
+<h3 id="下载nodemon第三方模块"><a href="#下载nodemon第三方模块" class="headerlink" title="下载nodemon第三方模块"></a>下载nodemon第三方模块</h3><p>在windows powershell 中写入以下命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install nodemon -g</span><br></pre></td></tr></table></figure>
 
+<p>Tip: -g表示全局安装，不可去掉</p>
+<h4 id="显示错误"><a href="#显示错误" class="headerlink" title="显示错误"></a>显示错误</h4><p>在安装过程中会等待，可是等着等着会显示出以下错误</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm ERR! Unexpected end of JSON input while parsing near &#39;... Ise, &quot;directories&quot;: &#123;&#125;，&#39;</span><br><span class="line">npm ERR! A complete log of this run can be found in:</span><br><span class="line">npm ERR!    C: \User s\Huite\AppData\Roaming\npm cache\_ logs\2020 -04-03T15_ 26 08_ 305Z- debug. log</span><br></pre></td></tr></table></figure>
 
+<p>会出现错误的原因就是由于npm下载默认在国外服务器，国内下载速度慢导致的延迟，从而下载失败</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>利用cnpm下载</p>
+<p>在windows powershell 命令行中输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cnpm install nodemon -g</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果还是报错，说明电脑没有下载cnpm，此时我们需要下载cnpm</strong></p>
+<h3 id="下载cnpm"><a href="#下载cnpm" class="headerlink" title="下载cnpm"></a>下载cnpm</h3><p>在windows powershell 中写入以下命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>下载成功后，我们需要检查是否能够执行</p>
+<p>在windows powershell 中写入以下命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cnpm -v</span><br></pre></td></tr></table></figure>
+
+<p>如果显示版本号说明没有问题，直接输入cnpm install nodemon -g即可完成对nodemon的安装。如果不幸的出了以下错误，也别着急。</p>
+<h4 id="显示错误-1"><a href="#显示错误-1" class="headerlink" title="显示错误"></a>显示错误</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cnpm : 无法加载文件 C:\Users\hp\AppData\Roaming\npm\cnpm.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:&#x2F;go.microsoft.com&#x2F;fwlink&#x2F;?LinkID&#x3D;135170 中的  </span><br><span class="line">about_Execution_Policies。</span><br><span class="line">所在位置 行:1 字符: 1</span><br><span class="line"> cnpm install amfe-flexible</span><br><span class="line">+ ~~~~</span><br><span class="line">    + CategoryInfo          : SecurityError: (:) []，PSSecurityException</span><br><span class="line">    + FullyQualifiedErrorId : UnauthorizedAccess</span><br></pre></td></tr></table></figure>
+
+<p>会出现次错误说明运行的权限不够</p>
+<h4 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h4><p>第一步：<br>重新打开一个power shell并且<strong>以管理员身份运行</strong><br>第二步：<br>输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set-ExecutionPolicy RemoteSigned</span><br></pre></td></tr></table></figure>
+
+<p>然后输入<strong>A</strong> 回车即可。</p>
+<p>最后我们再输入cnpm install nodemon -g</p>
+<p>你就会发现已经安装成功啦~~</p>
 ]]></content>
       <categories>
-        <category>Javascript</category>
+        <category>Node</category>
       </categories>
       <tags>
-        <tag>Javascript</tag>
+        <tag>Node</tag>
       </tags>
   </entry>
   <entry>
@@ -744,81 +819,6 @@
       </categories>
       <tags>
         <tag>MongoDB</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nodemon安装失败解决方案</title>
-    <url>/2020/06/10/nodemon%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>在前端学习过程中想必都会学习node.js吧，在node.js中有一个第三方模块nodemon尤为重要，它可以实现监听代码文件的变动，当代码改变之后，自动重启，就不用我们每修改一次代码就要手动重启，大大提高了工作的效率。但是安装过程中经常会出错，需要我们自行去解决。</p>
-<h3 id="下载nodemon第三方模块"><a href="#下载nodemon第三方模块" class="headerlink" title="下载nodemon第三方模块"></a>下载nodemon第三方模块</h3><p>在windows powershell 中写入以下命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install nodemon -g</span><br></pre></td></tr></table></figure>
-
-<p>Tip: -g表示全局安装，不可去掉</p>
-<h4 id="显示错误"><a href="#显示错误" class="headerlink" title="显示错误"></a>显示错误</h4><p>在安装过程中会等待，可是等着等着会显示出以下错误</p>
-<a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm ERR! Unexpected end of JSON input while parsing near &#39;... Ise, &quot;directories&quot;: &#123;&#125;，&#39;</span><br><span class="line">npm ERR! A complete log of this run can be found in:</span><br><span class="line">npm ERR!    C: \User s\Huite\AppData\Roaming\npm cache\_ logs\2020 -04-03T15_ 26 08_ 305Z- debug. log</span><br></pre></td></tr></table></figure>
-
-<p>会出现错误的原因就是由于npm下载默认在国外服务器，国内下载速度慢导致的延迟，从而下载失败</p>
-<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>利用cnpm下载</p>
-<p>在windows powershell 命令行中输入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cnpm install nodemon -g</span><br></pre></td></tr></table></figure>
-
-<p><strong>如果还是报错，说明电脑没有下载cnpm，此时我们需要下载cnpm</strong></p>
-<h3 id="下载cnpm"><a href="#下载cnpm" class="headerlink" title="下载cnpm"></a>下载cnpm</h3><p>在windows powershell 中写入以下命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-
-<p>下载成功后，我们需要检查是否能够执行</p>
-<p>在windows powershell 中写入以下命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cnpm -v</span><br></pre></td></tr></table></figure>
-
-<p>如果显示版本号说明没有问题，直接输入cnpm install nodemon -g即可完成对nodemon的安装。如果不幸的出了以下错误，也别着急。</p>
-<h4 id="显示错误-1"><a href="#显示错误-1" class="headerlink" title="显示错误"></a>显示错误</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cnpm : 无法加载文件 C:\Users\hp\AppData\Roaming\npm\cnpm.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:&#x2F;go.microsoft.com&#x2F;fwlink&#x2F;?LinkID&#x3D;135170 中的  </span><br><span class="line">about_Execution_Policies。</span><br><span class="line">所在位置 行:1 字符: 1</span><br><span class="line"> cnpm install amfe-flexible</span><br><span class="line">+ ~~~~</span><br><span class="line">    + CategoryInfo          : SecurityError: (:) []，PSSecurityException</span><br><span class="line">    + FullyQualifiedErrorId : UnauthorizedAccess</span><br></pre></td></tr></table></figure>
-
-<p>会出现次错误说明运行的权限不够</p>
-<h4 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h4><p>第一步：<br>重新打开一个power shell并且<strong>以管理员身份运行</strong><br>第二步：<br>输入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">set-ExecutionPolicy RemoteSigned</span><br></pre></td></tr></table></figure>
-
-<p>然后输入<strong>A</strong> 回车即可。</p>
-<p>最后我们再输入cnpm install nodemon -g</p>
-<p>你就会发现已经安装成功啦~~</p>
-]]></content>
-      <categories>
-        <category>Node</category>
-      </categories>
-      <tags>
-        <tag>Node</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>css也可以这么美之登录页面</title>
-    <url>/2020/05/26/css%E4%B9%9F%E5%8F%AF%E4%BB%A5%E8%BF%99%E4%B9%88%E7%BE%8E%E4%B9%8B%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在前端学习中，有”三大山脉“分别是html+css+javascript相信每个学前端的小伙伴都学习过，但是很多人却都不知道用纯css也可以写出非常好看的页面来，今天写了一个简单的登录页面和各位小伙伴交流学习。</p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><a id="more"></a>
-<p>HTML代码：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 引入图标和页面css文件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"icon.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"login.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>LOGIN<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"image"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 图片大家可以自选电脑里任意，以写好调整图片大小css代码 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"./imageM.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"login"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"header"</span>&gt;</span></span><br><span class="line">            LOGIN</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-border"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"border"</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">placeholder</span>=<span class="string">"username"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-border"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">class</span>=<span class="string">"border"</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">placeholder</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"action"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"btn-login"</span>&gt;</span>login<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"icon"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont icon-qq"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont icon-weibo"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont icon-weixin"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>CSS代码：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">html</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">'Segoe UI'</span>, Tahoma, Geneva, Verdana, sans-serif;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="comment">/*实现块级元素垂直居中*/</span></span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.image</span> <span class="selector-tag">img</span> &#123;</span><br><span class="line">    <span class="comment">/*实现图片自适应屏幕大小*/</span></span><br><span class="line">    <span class="attribute">position</span>: fixed;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">z-index</span>: -<span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">41</span>, <span class="number">45</span>, <span class="number">62</span>, <span class="number">0.7</span>);</span><br><span class="line">    <span class="attribute">color</span>: aliceblue;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">8px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.header</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">30px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.input</span> <span class="selector-tag">input</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgb</span>(<span class="number">41</span>, <span class="number">45</span>, <span class="number">62</span>);</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">0px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">15px</span>;</span><br><span class="line">    <span class="attribute">color</span>: aliceblue;</span><br><span class="line">    <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.input</span> <span class="selector-tag">input</span><span class="selector-pseudo">::placeholder</span> &#123;</span><br><span class="line">    <span class="attribute">text-transform</span>: uppercase;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.input-border</span> &#123;</span><br><span class="line">    <span class="comment">/*实现颜色从左到右渐变效果*/</span></span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(to right, #e8198b, #<span class="number">3</span>B65BB);</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">45px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">justify-content</span>: center;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">    <span class="attribute">transition</span>: .<span class="number">3s</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.input-border</span> <span class="selector-class">.border</span> &#123;</span><br><span class="line">    <span class="comment">/*这里使用了css3的calc()方法用于自动计算宽高*/</span></span><br><span class="line">    <span class="attribute">height</span>: <span class="built_in">calc</span>(<span class="number">100%</span> - <span class="number">4px</span>);</span><br><span class="line">    <span class="attribute">width</span>: <span class="built_in">calc</span>(<span class="number">100%</span> - <span class="number">4px</span>);</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.btn-login</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">60%</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">2px</span> solid <span class="number">#3B65BB</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">40px</span>;</span><br><span class="line">    <span class="attribute">text-transform</span>: uppercase;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    <span class="attribute">transition</span>: .<span class="number">3s</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.btn-login</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#3B65BB</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.icon</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">60%</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">18px</span>;</span><br><span class="line">    <span class="attribute">border-top</span>: <span class="number">1px</span> dashed <span class="number">#eee</span>;</span><br><span class="line">    <span class="attribute">padding-top</span>: <span class="number">13px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.login</span> <span class="selector-class">.icon</span> <span class="selector-tag">i</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgb</span>(<span class="number">187</span>, <span class="number">187</span>, <span class="number">187</span>);</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="效果图："><a href="#效果图：" class="headerlink" title="效果图："></a>效果图：</h3><p><img src="/2020/05/26/css%E4%B9%9F%E5%8F%AF%E4%BB%A5%E8%BF%99%E4%B9%88%E7%BE%8E%E4%B9%8B%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2/login.jpg" alt="Login"></p>
-<h3 id="学习总结"><a href="#学习总结" class="headerlink" title="学习总结"></a>学习总结</h3><p>本次学习主要是对页面布局的练手进一步加深对前端学习的兴趣以及对css的复习。同时对比较生疏的calc()方法进行学习。</p>
-<p>calc()从字面我们可以把他理解为一个函数function，是css3的一个新增的功能，用来指定元素的长度。calc()最大的好处就是用在流体布局上，可以通过calc()计算动态得到元素的宽度。比如说“width:calc(50%+2em)”，这样一来你就不用考虑元素DIV的宽度值到底是多少，而把这个烦人的任务交由浏览器去计算。</p>
-<p> <strong>calc()的运算规则</strong></p>
-<ol>
-<li>使用“+”、“-”、“*”和“/”四则运算</li>
-<li>可以使用百分比、px、em、rem等单位</li>
-<li>可以混合使用各种单位进行计算</li>
-<li>表达式中有“+”和“-”时，其前后必须要有空格</li>
-<li>表达式中有“*”和“/”时，其前后可以没有空格，但建议留有空格</li>
-</ol>
-]]></content>
-      <categories>
-        <category>HTML</category>
-        <category>CSS</category>
-      </categories>
-      <tags>
-        <tag>CSS</tag>
-        <tag>HTML</tag>
       </tags>
   </entry>
 </search>
