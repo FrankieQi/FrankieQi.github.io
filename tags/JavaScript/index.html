@@ -81,7 +81,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Frankie Blog">
-<meta property="og:url" content="https://frankieqi.github.io/tags/Javascript/index.html">
+<meta property="og:url" content="https://frankieqi.github.io/tags/JavaScript/index.html">
 <meta property="og:site_name" content="Frankie Blog">
 <meta property="article:author" content="FrankieQi">
 <meta name="twitter:card" content="summary">
@@ -114,13 +114,13 @@
 
 
 
-  <link rel="canonical" href="https://FrankieQi.github.io/tags/Javascript/"/>
+  <link rel="canonical" href="https://FrankieQi.github.io/tags/JavaScript/"/>
 
 
 
 
 
-  <title>标签: Javascript | Frankie Blog</title>
+  <title>标签: JavaScript | Frankie Blog</title>
   
 
 
@@ -275,7 +275,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>Javascript<small>标签</small>
+        <h1>JavaScript<small>标签</small>
         </h1>
       </div>
 
@@ -287,37 +287,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2020/05/15/JS%E4%B8%AD%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/" itemprop="url">
+            <a class="post-title-link" href="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/" itemprop="url">
               
-                <span itemprop="name">JS中的隐式转换</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-15T00:04:53+08:00"
-              content="2020-05-15" >
-          05-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/09/JS%E4%B8%AD%E7%9A%84%E6%98%BE%E5%BC%8F%E8%BD%AC%E6%8D%A2/" itemprop="url">
-              
-                <span itemprop="name">JS中的显式转换</span>
+                <span itemprop="name">canvas的基本使用和动态时钟实现</span>
               
             </a>
         
@@ -325,9 +297,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-09T00:04:53+08:00"
-              content="2020-05-09" >
-          05-09
+              datetime="2020-07-08T16:10:33+08:00"
+              content="2020-07-08" >
+          07-08
         </time>
       </div>
 
@@ -980,6 +952,49 @@
 
     // handle and trigger popup window;
     $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+ck(function(e) {
       e.stopPropagation();
       if (isfetched === false) {
         searchFunc(path, 'local-search-input', 'local-search-result');
