@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>JS中的隐式转换</title>
+    <url>/2020/05/15/JS%E4%B8%AD%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/</url>
+    <content><![CDATA[<h2 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>在JS中有一个在学习过程和面试过程中很常见的问题就是JS的隐式转换，经常会有各种各样的“坑”等着我们去踩。下面我结合个人学习过程遇到的问题简单谈谈。另一种转换方式是显示转换，感兴趣的小伙伴可点击跳转我之前写的文章。</p>
+<h4 id="算数运算符的转换"><a href="#算数运算符的转换" class="headerlink" title="算数运算符的转换"></a>算数运算符的转换</h4><ol>
+<li>在加减乘除取余（+-<em>/%）的计算的时候，如果运算数是非数字的，会转成数字进行计算。*</em>但是当加号运算符时，String和其他类型时，其他类型都会转为 String**，此时的算数运算符作用的+就会变成拼接字符串的作用的+。这一转换是通过调用对象的方法valueOf()或tostring()方法来实现的。</li>
+<li>当运算数是undefined的时候，也就是做改值未被赋值的时候，undefined 转化为Number是 为’NaN‘，任何值、任何类型与NaN相互运算都为NaN，也就是说只要未赋值算数运算后的值就是NaN。（值NaN永远不会其他值等同）</li>
+<li>null的转换成number型后的值为0，Boolean值里的true为1，false为0<a id="more"></a></li>
+<li>一元减运算符（-），当被用于一个运算数之前时，是一个取反操作。如果运算数是非数字的，运算符-会将其转成数字，如果参数不能别转换那么就会返回NaN。</li>
+<li>一元加运算符（+），当放在数字型的运算数之前什么都没做，但一元加运算符对于非数字型的有转换成数字的功能，如果参数不能被转换，就会返回NaN</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>+<span class="string">"true"</span>);<span class="comment">//1true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>+<span class="literal">true</span>);<span class="comment">//1+1=2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>+<span class="literal">undefined</span>);<span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>+<span class="literal">null</span>);<span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(+[]);<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(+&#123;&#125;);<span class="comment">//NaN</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="相等运算符的转换"><a href="#相等运算符的转换" class="headerlink" title="相等运算符的转换"></a>相等运算符的转换</h4><ol>
+<li>==用来检测两个值是否相等，如果相等返回值是true，否者是false</li>
+<li>两个对象永远不会相等因为他们指向不同的地址，引用不同的对象</li>
+<li>如果一个值是null，另一个值是undefined，他们会相等</li>
+<li>如果一个值是数字一个值是字符串，==会把字符串转成数字，再用转换后的值比较</li>
+<li>如果一个值是true，会将它转成1，再进行比较，如果是false，会将它转成0，再进行比较</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">true</span> == <span class="string">"1"</span>);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(&#123;<span class="attr">a</span>:<span class="number">1</span>&#125;==&#123;<span class="attr">b</span>:<span class="number">1</span>&#125;);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span>==<span class="literal">undefined</span>);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"1"</span>==<span class="number">1</span>);<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="关系运算符的转换"><a href="#关系运算符的转换" class="headerlink" title="关系运算符的转换"></a>关系运算符的转换</h4><ol>
+<li>大于、小于、小于等于、大于等于（&gt;、&lt;、&gt;=、&lt;=）这些比较运算符的运算数可以是任意类型的。但是比较运算只能在数字和字符串上执行，所以不是数字或者字符串的运算数将被转换成数字或者字符串</li>
+<li>如果都是是字符串，那么将作为字符串进行比较。字符串的比较方法是件字符转成unicode码进行比较。多个字符比较是从左边往右边。</li>
+<li>当字符串和数字比较时，如果字符串不代表数字，它将被转成NaN，比较的结果是false，如果是数字字符串，那么字符串会转成number类型，再进行比较。</li>
+<li>如果某个比较数是NaN，或者被转成了NaN，比较运算符总是生成false</li>
+<li>运算数不能被成功转换的时候，比较运算符总是返回false</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"2"</span>&gt;<span class="string">"10"</span>)<span class="comment">//true,注意这里是字符串之间的比较，所以是是unicode码的比较</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"2"</span>&gt;<span class="number">10</span>)<span class="comment">//false,这是字符串和数字的比较，会把字符串转成数字2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"abc"</span>&gt;<span class="string">"aac"</span>)<span class="comment">//true,会逐个比较，第一个字符相等第二个unicode码b大于c</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"aa"</span>&gt;<span class="number">2</span>)<span class="comment">//false,因为“aa”运算数是NaN，所以无论如何比较都是false</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="逻辑非运算符"><a href="#逻辑非运算符" class="headerlink" title="逻辑非运算符"></a>逻辑非运算符</h4><ol>
+<li>运算符！是一元运算符，放在一个运算数之前，用来对运算数的布尔值取反。也就是当一个数据类型在前面加上！后就会返回的是布尔型的值。</li>
+<li>逻辑运算符的优先级高于相等运算符</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log([]==<span class="number">0</span>)<span class="comment">//true，[]通过valueOf和toString方法得到空字符串，Number("")==0,返回true</span></span><br><span class="line"><span class="built_in">console</span>.log(![]==<span class="number">0</span>)<span class="comment">//true,</span></span><br><span class="line"><span class="comment">//由于逻辑运算符的优先级高，所以先将![]执行值为false，false==0所以返回true</span></span><br><span class="line"><span class="built_in">console</span>.log([]==![])<span class="comment">//true,</span></span><br><span class="line"><span class="comment">//[]隐式转换后是"",Number("")==0;![]=false,Number(false)==0;所以返回true</span></span><br><span class="line"><span class="built_in">console</span>.log([] == [])<span class="comment">//false</span></span><br><span class="line"><span class="comment">//复杂数据类型的数据存在堆中，只存地址，二者的地址不一样，所以返回的是false</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CSS中的Vertial-align属性</title>
     <url>/2020/07/05/CSS%E4%B8%AD%E7%9A%84Vertial-align%E5%B1%9E%E6%80%A7/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>vertical-align属性相信是很多初学前端布局小伙伴比较陌生和比较难以理解的一个属性。很多时候在想用vertical-align属性实现垂直居中的时候总是不起效果，只能去用别的方式实现。相信这是不少初学者的苦恼，下面让我从基本概念和用法、前端实现两个方面简单谈谈。</p>
@@ -116,41 +164,6 @@
 ]]></content>
       <categories>
         <category>HTML</category>
-        <category>CSS</category>
-      </categories>
-      <tags>
-        <tag>CSS</tag>
-        <tag>HTML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CSS实现三角形</title>
-    <url>/2020/04/29/CSS%E5%AE%9E%E7%8E%B0%E4%B8%89%E8%A7%92%E5%BD%A2/</url>
-    <content><![CDATA[<h3 id="使用纯CSS实现三角形"><a href="#使用纯CSS实现三角形" class="headerlink" title="使用纯CSS实现三角形"></a>使用纯CSS实现三角形</h3><p>在css中实现三角形的方法一般就是使用设置border的方法</p>
-<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p>通过边框叠加样式会覆盖的原理，通过控制border的有无、宽度、是否透明就能实现不同三角形的展示</p>
-<p>Tip:宽度和高度必须设置成0；否则是达不到想要的效果的！！</p>
-<h4 id="实现样式"><a href="#实现样式" class="headerlink" title="实现样式"></a>实现样式</h4><p>首先我们先来看一下在边框不设置透明的情况下的实现效果</p>
-<a id="more"></a>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.triangle</span> &#123;</span></span><br><span class="line">            width: 0;</span><br><span class="line">            height: 0;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">            border-top: 50px solid black;</span><br><span class="line">            border-right: 50px solid pink;</span><br><span class="line">            border-left: 50px solid blue;</span><br><span class="line">            border-bottom: 50px solid red;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"triangle"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>实现效果：</p>
-<p><img src="/2020/04/29/CSS%E5%AE%9E%E7%8E%B0%E4%B8%89%E8%A7%92%E5%BD%A2/%E6%A0%B7%E5%BC%8F1.png" alt></p>
-<p>在这里我们发现在重叠的部分会被覆盖掉，那么我们只需要将不想显示出来的样式使用transparent属性设置就可以实现三角形的出现，并且通过设置border的有无和宽度就可以实现三角形的大小、角度改变。</p>
-<p><strong>等腰三角形</strong>：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css"><span class="selector-class">.triangle</span> &#123;</span></span><br><span class="line">            width: 0;</span><br><span class="line">            height: 0;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">            border-top: 50px solid transparent;</span><br><span class="line">            border-right: 50px solid transparent;</span><br><span class="line">            border-left: 50px solid transparent;</span><br><span class="line">            border-bottom: 50px solid red;</span><br><span class="line"><span class="css">    		<span class="comment">/*我们可以根据想要的三角形设置其他方向上的border为透明*/</span></span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/04/29/CSS%E5%AE%9E%E7%8E%B0%E4%B8%89%E8%A7%92%E5%BD%A2/%E6%A0%B7%E5%BC%8F2.png" alt></p>
-<p><strong>直角三角形：</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.triangle</span> &#123;</span></span><br><span class="line">            width: 0;</span><br><span class="line">            height: 0;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">            border-left: 150px solid transparent;</span><br><span class="line">            border-bottom: 150px solid yellowgreen;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/04/29/CSS%E5%AE%9E%E7%8E%B0%E4%B8%89%E8%A7%92%E5%BD%A2/%E6%A0%B7%E5%BC%8F3.png" alt></p>
-<p>其他样式的三角形：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.triangle</span> &#123;</span></span><br><span class="line">        width: 0;</span><br><span class="line">        height: 0;</span><br><span class="line">        margin: 100px auto;</span><br><span class="line">        border-top: 50px solid transparent;</span><br><span class="line">        border-right: 50px solid transparent;</span><br><span class="line">        border-left: 100px solid transparent;</span><br><span class="line">        border-bottom: 75px solid red;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/04/29/CSS%E5%AE%9E%E7%8E%B0%E4%B8%89%E8%A7%92%E5%BD%A2/%E6%A0%B7%E5%BC%8F4.png" alt></p>
-<p>非常简单的实现三角形的方式，小伙伴赶紧动手感受一下叭！    </p>
-]]></content>
-      <categories>
         <category>CSS</category>
       </categories>
       <tags>
@@ -299,72 +312,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>JS中的隐式转换</title>
-    <url>/2020/05/15/JS%E4%B8%AD%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/</url>
-    <content><![CDATA[<h2 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>在JS中有一个在学习过程和面试过程中很常见的问题就是JS的隐式转换，经常会有各种各样的“坑”等着我们去踩。下面我结合个人学习过程遇到的问题简单谈谈。另一种转换方式是显示转换，感兴趣的小伙伴可点击跳转我之前写的文章。</p>
-<h4 id="算数运算符的转换"><a href="#算数运算符的转换" class="headerlink" title="算数运算符的转换"></a>算数运算符的转换</h4><ol>
-<li>在加减乘除取余（+-<em>/%）的计算的时候，如果运算数是非数字的，会转成数字进行计算。*</em>但是当加号运算符时，String和其他类型时，其他类型都会转为 String**，此时的算数运算符作用的+就会变成拼接字符串的作用的+。这一转换是通过调用对象的方法valueOf()或tostring()方法来实现的。</li>
-<li>当运算数是undefined的时候，也就是做改值未被赋值的时候，undefined 转化为Number是 为’NaN‘，任何值、任何类型与NaN相互运算都为NaN，也就是说只要未赋值算数运算后的值就是NaN。（值NaN永远不会其他值等同）</li>
-<li>null的转换成number型后的值为0，Boolean值里的true为1，false为0<a id="more"></a></li>
-<li>一元减运算符（-），当被用于一个运算数之前时，是一个取反操作。如果运算数是非数字的，运算符-会将其转成数字，如果参数不能别转换那么就会返回NaN。</li>
-<li>一元加运算符（+），当放在数字型的运算数之前什么都没做，但一元加运算符对于非数字型的有转换成数字的功能，如果参数不能被转换，就会返回NaN</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>+<span class="string">"true"</span>);<span class="comment">//1true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>+<span class="literal">true</span>);<span class="comment">//1+1=2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>+<span class="literal">undefined</span>);<span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>+<span class="literal">null</span>);<span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(+[]);<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(+&#123;&#125;);<span class="comment">//NaN</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="相等运算符的转换"><a href="#相等运算符的转换" class="headerlink" title="相等运算符的转换"></a>相等运算符的转换</h4><ol>
-<li>==用来检测两个值是否相等，如果相等返回值是true，否者是false</li>
-<li>两个对象永远不会相等因为他们指向不同的地址，引用不同的对象</li>
-<li>如果一个值是null，另一个值是undefined，他们会相等</li>
-<li>如果一个值是数字一个值是字符串，==会把字符串转成数字，再用转换后的值比较</li>
-<li>如果一个值是true，会将它转成1，再进行比较，如果是false，会将它转成0，再进行比较</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">true</span> == <span class="string">"1"</span>);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(&#123;<span class="attr">a</span>:<span class="number">1</span>&#125;==&#123;<span class="attr">b</span>:<span class="number">1</span>&#125;);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span>==<span class="literal">undefined</span>);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"1"</span>==<span class="number">1</span>);<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="关系运算符的转换"><a href="#关系运算符的转换" class="headerlink" title="关系运算符的转换"></a>关系运算符的转换</h4><ol>
-<li>大于、小于、小于等于、大于等于（&gt;、&lt;、&gt;=、&lt;=）这些比较运算符的运算数可以是任意类型的。但是比较运算只能在数字和字符串上执行，所以不是数字或者字符串的运算数将被转换成数字或者字符串</li>
-<li>如果都是是字符串，那么将作为字符串进行比较。字符串的比较方法是件字符转成unicode码进行比较。多个字符比较是从左边往右边。</li>
-<li>当字符串和数字比较时，如果字符串不代表数字，它将被转成NaN，比较的结果是false，如果是数字字符串，那么字符串会转成number类型，再进行比较。</li>
-<li>如果某个比较数是NaN，或者被转成了NaN，比较运算符总是生成false</li>
-<li>运算数不能被成功转换的时候，比较运算符总是返回false</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"2"</span>&gt;<span class="string">"10"</span>)<span class="comment">//true,注意这里是字符串之间的比较，所以是是unicode码的比较</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"2"</span>&gt;<span class="number">10</span>)<span class="comment">//false,这是字符串和数字的比较，会把字符串转成数字2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"abc"</span>&gt;<span class="string">"aac"</span>)<span class="comment">//true,会逐个比较，第一个字符相等第二个unicode码b大于c</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"aa"</span>&gt;<span class="number">2</span>)<span class="comment">//false,因为“aa”运算数是NaN，所以无论如何比较都是false</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="逻辑非运算符"><a href="#逻辑非运算符" class="headerlink" title="逻辑非运算符"></a>逻辑非运算符</h4><ol>
-<li>运算符！是一元运算符，放在一个运算数之前，用来对运算数的布尔值取反。也就是当一个数据类型在前面加上！后就会返回的是布尔型的值。</li>
-<li>逻辑运算符的优先级高于相等运算符</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log([]==<span class="number">0</span>)<span class="comment">//true，[]通过valueOf和toString方法得到空字符串，Number("")==0,返回true</span></span><br><span class="line"><span class="built_in">console</span>.log(![]==<span class="number">0</span>)<span class="comment">//true,</span></span><br><span class="line"><span class="comment">//由于逻辑运算符的优先级高，所以先将![]执行值为false，false==0所以返回true</span></span><br><span class="line"><span class="built_in">console</span>.log([]==![])<span class="comment">//true,</span></span><br><span class="line"><span class="comment">//[]隐式转换后是"",Number("")==0;![]=false,Number(false)==0;所以返回true</span></span><br><span class="line"><span class="built_in">console</span>.log([] == [])<span class="comment">//false</span></span><br><span class="line"><span class="comment">//复杂数据类型的数据存在堆中，只存地址，二者的地址不一样，所以返回的是false</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/03/18/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Hello-Hexo"><a href="#Hello-Hexo" class="headerlink" title="Hello Hexo"></a>Hello Hexo</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>css也可以这么美之登录页面</title>
     <url>/2020/05/26/css%E4%B9%9F%E5%8F%AF%E4%BB%A5%E8%BF%99%E4%B9%88%E7%BE%8E%E4%B9%8B%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在前端学习中，有”三大山脉“分别是html+css+javascript相信每个学前端的小伙伴都学习过，但是很多人却都不知道用纯css也可以写出非常好看的页面来，今天写了一个简单的登录页面和各位小伙伴交流学习。</p>
@@ -395,6 +342,245 @@
         <tag>CSS</tag>
         <tag>HTML</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>canvas的基本使用和动态时钟实现</title>
+    <url>/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>HTML5 <code>&lt;canvas&gt;</code> 元素用于图形的绘制，通过脚本 (通常是JavaScript)来完成，<code>&lt;canvas&gt;</code> 标签只是图形容器，和别的标签不同，我们不在<code>&lt;canvas&gt;</code>标签里面写内容，必须使用脚本来绘制图形。Canvas是一个行内块元素。</p>
+<h4 id="Canvas基础"><a href="#Canvas基础" class="headerlink" title="Canvas基础"></a>Canvas基础</h4><ol>
+<li><p>画布的创建，在绘图之前我们首先是需要一张“纸”，默认情况下 <code>&lt;canvas&gt;</code> 元素没有边框和内容。</p>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;canvas id=<span class="string">"myCanvas"</span> width=<span class="string">"200"</span> height=<span class="string">"100"</span>&gt;&lt;<span class="regexp">/canvas&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>  标签通常需要指定一个id属性 (脚本中经常引用), width 和 height 属性定义的画布的大小</p>
+<a id="more"></a></li>
+<li><p>在<code>&lt;canvas&gt;</code>上绘制</p>
+<ul>
+<li><p>首先要获取到canvas元素</p>
+</li>
+<li><p>创建context对象  (这里我们可以利用判断是否有上下文对象来判断浏览器是否支持)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> c=<span class="built_in">document</span>.getElementById(<span class="string">"myCanvas"</span>);</span><br><span class="line"><span class="keyword">var</span> ctx=c.getContext(<span class="string">"2d"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>2D上下文</p>
+<ul>
+<li>使用2d绘图上下文提供的方法，可以绘制简单的2D图形，比如矩形、弧形和路径等。2D上下文的起始位置是<code>&lt;canvas&gt;</code>画布的左上角，原点坐标为（0，0）。所有的坐标值都是基于这个点计算的，x越大表示越靠右，y越大表示越靠下。大家在绘图时候可以在脑海中构建一个坐标系。width和height表示在这两个方向上可用的像素数目。</li>
+</ul>
+</li>
+<li><p>线条和填充、路径</p>
+<ul>
+<li>路径</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>stroke()</td>
+<td>绘制已定义的路径</td>
+<td>无</td>
+</tr>
+<tr>
+<td>beginPath()</td>
+<td>起始一条路径，或重置当前路径</td>
+<td>无</td>
+</tr>
+<tr>
+<td>closePath()</td>
+<td>创建从当前点回到起始点的路径</td>
+<td>无</td>
+</tr>
+<tr>
+<td>lineTo()</td>
+<td>添加一个新点，然后在画布中创建从该点到最后指定点的线条</td>
+<td>坐标</td>
+</tr>
+<tr>
+<td>arc()</td>
+<td>创建弧/曲线（用于创建圆形或部分圆）</td>
+<td>（x,y,r,sAngle,eAngle,counterclockwise）</td>
+</tr>
+<tr>
+<td>moveTo()</td>
+<td>把路径起始位置移动到画布中的指定点，不创建线条</td>
+<td>坐标</td>
+</tr>
+</tbody></table>
+<ul>
+<li>线条</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lineCap()</td>
+<td>设置或返回线条的结束端点样式</td>
+<td>butt：向线条的每个末端添加平直的边缘。round：向线条的每个末端添加圆形线帽。square：向线条的每个末端添加正方形线帽。</td>
+</tr>
+<tr>
+<td>lineWidth()</td>
+<td>设置或返回当前的线条宽度</td>
+<td>number：当前线条的宽度，以像素计。</td>
+</tr>
+</tbody></table>
+<ul>
+<li>填充</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fillStyle()</td>
+<td>设置或返回用于填充绘画的颜色、渐变或模式</td>
+<td>color:指示绘图填充色的CSS颜色值；gradient：用于填充绘图的渐变对象</td>
+</tr>
+<tr>
+<td>fill()</td>
+<td>填充当前绘图（路径）</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<p>实例：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;canvas id=<span class="string">"canvas"</span> width=<span class="string">"200"</span> height=<span class="string">"200"</span>&gt;&lt;<span class="regexp">/canvas&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">var</span> convas = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line">    <span class="keyword">var</span> ctx = convas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">    ctx.moveTo(<span class="number">100</span>, <span class="number">100</span>);</span><br><span class="line">    ctx.lineTo(<span class="number">150</span>, <span class="number">150</span>);</span><br><span class="line">    ctx.lineTo(<span class="number">80</span>, <span class="number">150</span>);</span><br><span class="line">    ctx.lineWidth = <span class="number">5</span>;</span><br><span class="line">    ctx.strokeStyle = <span class="string">"#ccc"</span>;</span><br><span class="line">    ctx.stroke()</span><br><span class="line">    ctx.fill()</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E4%B8%89%E8%A7%92%E5%BD%A2.png" alt="三角形"></p>
+</li>
+</ol>
+<ol start="5">
+<li><p>文本、转化和保存</p>
+<ul>
+<li><p>文本</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>font</td>
+<td>设置或返回文本内容的当前字体属性</td>
+<td>font-style、font-variant、font-weight</td>
+</tr>
+<tr>
+<td>textAlign</td>
+<td>设置或返回文本内容的当前对齐方式</td>
+<td>center、left、right、start、end</td>
+</tr>
+<tr>
+<td>textBaseline</td>
+<td>设置或返回在绘制文本时使用的当前文本基线</td>
+<td>middle、top、buttom</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>转化</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>scale()</td>
+<td>缩放当前绘图至更大或更小</td>
+<td>scalewidth：缩放当前绘图的宽度（1=100%）；scaleheight：缩放当前绘图的高度</td>
+</tr>
+<tr>
+<td>rotate()</td>
+<td>旋转当前绘图</td>
+<td>angle：角度</td>
+</tr>
+<tr>
+<td>transalte()</td>
+<td>重新映射画布上的 (0,0) 位置</td>
+<td>坐标（x,y）</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>保存</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+<th>属性值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>save()</td>
+<td>保存当前环境的状态</td>
+<td>无</td>
+</tr>
+<tr>
+<td>restore()</td>
+<td>返回之前保存过的路径状态和属性</td>
+<td>无</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>绘制弧线的方法（利用arc()方法）</p>
+<p>arc(x,y,r,sAngle,eAngle,counterclockwise)</p>
+<p>x,y就是画这个弧线的圆心坐标；r为半径值；sAngle,eAngle就是起始角和结束角；<em>counterclockwise</em>是表示画的方向，false为顺时针，true为逆时针。</p>
+<p>sAngle,eAngle的具体可见下图（<strong>记住起始位置不是在上面而是在右边</strong>）</p>
+<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E8%A7%92%E5%BA%A6.jpg" alt></p>
+</li>
+</ol>
+<p>   Tip：当我们使用顺时针画和逆时针画是不同的，要注意区分,请看下面例子，只是画的方向不同，图形也不同</p>
+   <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> convas = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">var</span> ctx = convas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">ctx.beginPath()</span><br><span class="line">ctx.arc(<span class="number">100</span>, <span class="number">100</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="number">1.5</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>) <span class="comment">//顺时针画法</span></span><br><span class="line">ctx.stroke()</span><br><span class="line">ctx.closePath()</span><br><span class="line">ctx.beginPath()</span><br><span class="line">ctx.arc(<span class="number">200</span>, <span class="number">100</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="number">1.5</span> * <span class="built_in">Math</span>.PI, <span class="literal">true</span>)<span class="comment">//逆时针画法</span></span><br><span class="line">ctx.stroke()</span><br><span class="line">ctx.closePath()</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E5%BC%A7%E7%BA%BF.jpg" alt></p>
+<h4 id="动态时钟案例"><a href="#动态时钟案例" class="headerlink" title="动态时钟案例"></a>动态时钟案例</h4><p>原理：通过canvas绘制时钟的每一个线段，在把当前时间写入到绘图函数中，每一秒钟调用一次绘图函数，就可以实现时钟动态化</p>
+<p>源码如下：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>动态时钟<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-id">#clock</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">border</span>: 1<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-id">#ccc</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        div &#123;</span><br><span class="line">            text-align: center;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"clock"</span> <span class="attr">width</span>=<span class="string">"200px"</span> <span class="attr">height</span>=<span class="string">"200px"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> clo = <span class="built_in">document</span>.getElementById(<span class="string">'clock'</span>);</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> ctx = clo.getContext(<span class="string">'2d'</span>);</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> width = ctx.canvas.width;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> height = ctx.canvas.height;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> r = width / <span class="number">2</span>; <span class="comment">//半径</span></span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawBackground</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">            ctx.save(); <span class="comment">//为了保存清除之前时钟的环境</span></span></span><br><span class="line"><span class="actionscript">            ctx.translate(r, r); <span class="comment">//切换中心点,此时（0，0）就在最中心了，不再是在左上角</span></span></span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="actionscript">            ctx.lineWidth = <span class="number">8</span>;<span class="comment">//线条的宽度</span></span></span><br><span class="line"><span class="javascript">            ctx.arc(<span class="number">0</span>, <span class="number">0</span>, r - <span class="number">4</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>)<span class="comment">//绘制最外圆</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line"><span class="actionscript">            <span class="comment">//画小时数</span></span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> hourNumber = [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">1</span>, <span class="number">2</span>];</span></span><br><span class="line"><span class="actionscript">            ctx.font = <span class="string">'18px Arial'</span>; <span class="comment">//设置文本大小</span></span></span><br><span class="line"><span class="actionscript">            ctx.textAlign = <span class="string">'center'</span>; <span class="comment">//文本居中</span></span></span><br><span class="line"><span class="actionscript">            ctx.textBaseline = <span class="string">'middle'</span>;</span></span><br><span class="line"><span class="actionscript">            hourNumber.forEach(<span class="function"><span class="keyword">function</span><span class="params">(number, i)</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">                <span class="comment">//求出每一个对应的弧度</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">12</span> * i;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> x = <span class="built_in">Math</span>.cos(rad) * (r - <span class="number">30</span>);<span class="comment">//算出每个数字对应的坐标</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> y = <span class="built_in">Math</span>.sin(rad) * (r - <span class="number">30</span>);</span></span><br><span class="line"><span class="actionscript">                ctx.fillText(number, x, y) <span class="comment">//填充文本</span></span></span><br><span class="line">            &#125;);</span><br><span class="line"><span class="actionscript">            <span class="comment">//画每分钟对应的小点点</span></span></span><br><span class="line"><span class="actionscript">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">60</span>; i++) &#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">60</span> * i;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> x = <span class="built_in">Math</span>.cos(rad) * (r - <span class="number">10</span>);</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> y = <span class="built_in">Math</span>.sin(rad) * (r - <span class="number">10</span>);</span></span><br><span class="line">                ctx.beginPath();</span><br><span class="line"><span class="actionscript">                <span class="keyword">if</span> (i % <span class="number">5</span> === <span class="number">0</span>) &#123; <span class="comment">//被5整除也就是小时数</span></span></span><br><span class="line"><span class="actionscript">                    ctx.fillStyle = <span class="string">"#000"</span>; <span class="comment">//要加上，否则由于canvas是基于状态的，所以会把													这里的颜色也改成#ccc</span></span></span><br><span class="line"><span class="javascript">                    ctx.arc(x, y, <span class="number">2.5</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">true</span>)</span></span><br><span class="line"><span class="actionscript">                &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="actionscript">                    ctx.fillStyle = <span class="string">"#ccc"</span></span></span><br><span class="line"><span class="javascript">                    ctx.arc(x, y, <span class="number">1.5</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">true</span>)</span></span><br><span class="line">                &#125;</span><br><span class="line">                ctx.fill()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawHour</span><span class="params">(hour, minute)</span> </span>&#123;<span class="comment">//画时针函数</span></span></span><br><span class="line"><span class="actionscript">            ctx.save(); <span class="comment">//保存画小时之前的环境</span></span></span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">12</span> * hour; <span class="comment">//每一个小时要旋转的弧度</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> mrad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">12</span> / <span class="number">60</span> * minute; <span class="comment">//分钟数移动的弧度</span></span></span><br><span class="line"><span class="actionscript">            ctx.rotate(rad + mrad); <span class="comment">//画布的旋转</span></span></span><br><span class="line">            ctx.lineWidth = 5;</span><br><span class="line"><span class="actionscript">            ctx.moveTo(<span class="number">0</span>, <span class="number">10</span>); <span class="comment">//移动原点到原点的下面一点，作为画时针的起始位置</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineTo(<span class="number">0</span>, -r / <span class="number">2</span>); <span class="comment">//原点的位置在中心所以往上画要是负数</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineCap = <span class="string">'round'</span>; <span class="comment">//设置线条的结尾形状</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line"><span class="actionscript">            ctx.restore(); <span class="comment">//返回画小时之前的画布的保存过的路径和属性状态</span></span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawMinute</span><span class="params">(minute)</span> </span>&#123;<span class="comment">//画分针函数</span></span></span><br><span class="line"><span class="actionscript">            <span class="comment">//为了区分开画布环境</span></span></span><br><span class="line">            ctx.save();</span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">60</span> * minute; <span class="comment">//每一个小时要旋转的弧度</span></span></span><br><span class="line"><span class="actionscript">            ctx.rotate(rad); <span class="comment">//画布的旋转</span></span></span><br><span class="line">            ctx.lineWidth = 3;</span><br><span class="line"><span class="actionscript">            ctx.moveTo(<span class="number">0</span>, <span class="number">10</span>); <span class="comment">//移动原点到原点的下面一点，作为画时针的起始位置</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineTo(<span class="number">0</span>, -r + <span class="number">20</span>); <span class="comment">//原点的位置在中心所以往上画要是负数,值越大画的越短</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineCap = <span class="string">'round'</span>; <span class="comment">//设置线条的结尾形状</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line">            ctx.restore();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawSecond</span><span class="params">(second)</span> </span>&#123;<span class="comment">//画秒针函数</span></span></span><br><span class="line">            ctx.save();</span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">60</span> * second; <span class="comment">//每一个小时要旋转的弧度</span></span></span><br><span class="line"><span class="actionscript">            ctx.rotate(rad); <span class="comment">//画布的旋转</span></span></span><br><span class="line">            ctx.lineWidth = 2;</span><br><span class="line"><span class="actionscript">            ctx.strokeStyle = <span class="string">"red"</span></span></span><br><span class="line"><span class="actionscript">            ctx.moveTo(<span class="number">0</span>, <span class="number">10</span>); <span class="comment">//移动原点到原点的下面一点，作为画时针的起始位置</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineTo(<span class="number">0</span>, -r + <span class="number">20</span>); <span class="comment">//原点的位置在中心所以往上画要是负数,值越大画的越短</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineCap = <span class="string">'round'</span>; <span class="comment">//设置线条的结尾形状</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line">            ctx.restore();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawDot</span><span class="params">()</span> </span>&#123;<span class="comment">//画中心点</span></span></span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="actionscript">            ctx.fillStyle = <span class="string">"#fff"</span></span></span><br><span class="line"><span class="javascript">            ctx.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>)</span></span><br><span class="line">            ctx.fill()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;<span class="comment">//绘图函数</span></span></span><br><span class="line"><span class="actionscript">            ctx.clearRect(<span class="number">0</span>, <span class="number">0</span>, width, height); <span class="comment">//每秒清除一次canvas再画出时分秒</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> hour = date.getHours();</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> minute = date.getMinutes();</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> second = date.getSeconds();</span></span><br><span class="line">            drawBackground()</span><br><span class="line">            drawHour(hour, minute);</span><br><span class="line">            drawMinute(minute);</span><br><span class="line">            drawSecond(second);</span><br><span class="line">            drawDot()</span><br><span class="line"><span class="actionscript">            ctx.restore(); <span class="comment">//画完之后</span></span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        draw(); <span class="comment">//避免第一秒无效果</span></span></span><br><span class="line"><span class="actionscript">        setInterval(draw, <span class="number">1000</span>);<span class="comment">//定时器函数每秒调用一次</span></span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>实现结果：</p>
+<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E6%97%B6%E9%92%9F.jpg" alt="时钟特效"></p>
+]]></content>
+      <categories>
+        <category>HTML</category>
+      </categories>
+      <tags>
+        <tag>HTML5</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/03/18/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Hello-Hexo"><a href="#Hello-Hexo" class="headerlink" title="Hello Hexo"></a>Hello Hexo</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>nodemon安装失败解决方案</title>
@@ -437,29 +623,6 @@
       </categories>
       <tags>
         <tag>Node</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue实现刷新当前页面，重载页面数据</title>
-    <url>/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<h3 id="Vue实现刷新当前页面，重载页面数据"><a href="#Vue实现刷新当前页面，重载页面数据" class="headerlink" title="Vue实现刷新当前页面，重载页面数据"></a>Vue实现刷新当前页面，重载页面数据</h3><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前几天在做个人播放器项目时，遇到一个问题：在进行搜索功能时，第一次搜索后，在搜素界面再次搜索时，发现搜索完成只是hash地址发生的转换，但是页面的数据并没有发生转换，也就是没能触发组件的刷新，由于搜索框的组件和搜索内容的组件二者之间不是父子组件也不是兄弟组件，很难实现数据交互。在苦恼许久查阅文档和百度搜索后，成功解决，给出以下解决方案给予参考。</p>
-<p>该方案的应用场景可用于一些需要刷新页面，重载数据时，比如：在管理后台，在执行完，增，删，改，操作的时候等等。</p>
-<a id="more"></a>
-<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>需要用到一个 <a href="https://cn.vuejs.org/v2/api/#provide-inject" target="_blank" rel="noopener">provide / inject</a> 这对用例。这对选项需要一起使用，以允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效</p>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>在根组件中，也就是App.vue中写如下代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">        &lt;router-view v-if&#x3D;&quot;isRouterAlive&quot;&gt;&lt;&#x2F;router-view&gt;</span><br><span class="line">      	&lt;index v-if&#x3D;&quot;isRouterAlive&quot;&#x2F;&gt;</span><br><span class="line">      &#x2F;*只要是组件想要刷新的主要在组件中加上v-if&#x3D;&quot;isRouterAlive&quot;即可*&#x2F;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"> </span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;App&#39;,</span><br><span class="line">  provide ()&#123;</span><br><span class="line">     return &#123;</span><br><span class="line">       reload:this.reload</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  data()&#123;</span><br><span class="line">    return &#123;</span><br><span class="line">       isRouterAlive:true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods:&#123;</span><br><span class="line">    reload ()&#123;</span><br><span class="line">       this.isRouterAlive &#x3D; false</span><br><span class="line">       this.$nextTick(function()&#123;</span><br><span class="line">          this.isRouterAlive &#x3D; true</span><br><span class="line">       &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  components:&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>在触发的子组件中引用即可</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export default&#123;</span><br><span class="line">	inject:[&#39;reload&#39;],</span><br><span class="line">	data()&#123;</span><br><span class="line">		return&#123;</span><br><span class="line">			inputValue:&#39;&#39;</span><br><span class="line">	 &#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	method:&#123;</span><br><span class="line">		toResult()&#123;</span><br><span class="line">		this.reload()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Tip: 只需要在子组件中引入inject:[‘reload’]；然后调用reload()方法即可实现刷新；是不是很简单方便~~</p>
-<p>在此分享给大家</p>
-]]></content>
-      <categories>
-        <category>Vue</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
       </tags>
   </entry>
   <entry>
@@ -655,63 +818,31 @@
       </tags>
   </entry>
   <entry>
-    <title>圣杯布局</title>
-    <url>/2020/06/30/%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80/</url>
-    <content><![CDATA[<h3 id="圣杯布局"><a href="#圣杯布局" class="headerlink" title="圣杯布局"></a>圣杯布局</h3><p>所谓圣杯布局是前端开发中常用的布局方式也是面试常问的问题。所以必须掌握起来。主要是实现一个<strong>两侧宽度固定，中间宽度自适应的三栏布局</strong>。</p>
-<h4 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h4><ol>
-<li><p>中间元素在布局时候在左右元素的上方</p>
-</li>
-<li><p>三个布局元素都要向左浮动</p>
-</li>
-<li><p>在父元素身上设置padding值，值的大小为左右盒子的宽度</p>
-</li>
-<li><p>左盒子设margin-left：-100%，设置相对定位，移动盒子为了不挡住中间盒子</p>
-</li>
-<li><p>右盒子设margin-right：-（盒子自身宽度）</p>
-</li>
-<li><p>中间盒子设置width:100%，实现自适应</p>
-</li>
-<li><p>设置最小宽度，让在宽度达到指定值以后布局不会乱</p>
+    <title>CSS实现三角形</title>
+    <url>/2020/04/29/CSS%E5%AE%9E%E7%8E%B0%E4%B8%89%E8%A7%92%E5%BD%A2/</url>
+    <content><![CDATA[<h3 id="使用纯CSS实现三角形"><a href="#使用纯CSS实现三角形" class="headerlink" title="使用纯CSS实现三角形"></a>使用纯CSS实现三角形</h3><p>在css中实现三角形的方法一般就是使用设置border的方法</p>
+<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p>通过边框叠加样式会覆盖的原理，通过控制border的有无、宽度、是否透明就能实现不同三角形的展示</p>
+<p>Tip:宽度和高度必须设置成0；否则是达不到想要的效果的！！</p>
+<h4 id="实现样式"><a href="#实现样式" class="headerlink" title="实现样式"></a>实现样式</h4><p>首先我们先来看一下在边框不设置透明的情况下的实现效果</p>
 <a id="more"></a>
-<h4 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h4></li>
-<li><p>布局设置</p>
-</li>
-</ol>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"center"</span>&gt;</span>主盒子<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span>&gt;</span>左盒子<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span>右盒子<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.triangle</span> &#123;</span></span><br><span class="line">            width: 0;</span><br><span class="line">            height: 0;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">            border-top: 50px solid black;</span><br><span class="line">            border-right: 50px solid pink;</span><br><span class="line">            border-left: 50px solid blue;</span><br><span class="line">            border-bottom: 50px solid red;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"triangle"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>设置padding值</li>
-</ol>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.container</span> </span><br><span class="line">&#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: tomato;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现效果：</p>
+<p><img src="/2020/04/29/CSS%E5%AE%9E%E7%8E%B0%E4%B8%89%E8%A7%92%E5%BD%A2/%E6%A0%B7%E5%BC%8F1.png" alt></p>
+<p>在这里我们发现在重叠的部分会被覆盖掉，那么我们只需要将不想显示出来的样式使用transparent属性设置就可以实现三角形的出现，并且通过设置border的有无和宽度就可以实现三角形的大小、角度改变。</p>
+<p><strong>等腰三角形</strong>：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css"><span class="selector-class">.triangle</span> &#123;</span></span><br><span class="line">            width: 0;</span><br><span class="line">            height: 0;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">            border-top: 50px solid transparent;</span><br><span class="line">            border-right: 50px solid transparent;</span><br><span class="line">            border-left: 50px solid transparent;</span><br><span class="line">            border-bottom: 50px solid red;</span><br><span class="line"><span class="css">    		<span class="comment">/*我们可以根据想要的三角形设置其他方向上的border为透明*/</span></span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>设置主盒子,和左右盒子基本样式</li>
-</ol>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.center</span>&#123;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: thistle;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="selector-class">.left</span> &#123;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: chartreuse;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="selector-class">.right</span> &#123;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: chocolate;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/04/29/CSS%E5%AE%9E%E7%8E%B0%E4%B8%89%E8%A7%92%E5%BD%A2/%E6%A0%B7%E5%BC%8F2.png" alt></p>
+<p><strong>直角三角形：</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.triangle</span> &#123;</span></span><br><span class="line">            width: 0;</span><br><span class="line">            height: 0;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">            border-left: 150px solid transparent;</span><br><span class="line">            border-bottom: 150px solid yellowgreen;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/2020/06/30/%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80/%E6%A0%B7%E5%BC%8F01.png" alt></p>
-<ol start="4">
-<li>为左盒子设置相对定位、负外边距</li>
-</ol>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.left</span> &#123;</span><br><span class="line">            <span class="attribute">position</span>: relative;</span><br><span class="line">            <span class="attribute">left</span>: -<span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">margin-left</span>: -<span class="number">100%</span>;<span class="comment">/*重点*/</span></span><br><span class="line">            <span class="attribute">background-color</span>: chartreuse;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/04/29/CSS%E5%AE%9E%E7%8E%B0%E4%B8%89%E8%A7%92%E5%BD%A2/%E6%A0%B7%E5%BC%8F3.png" alt></p>
+<p>其他样式的三角形：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.triangle</span> &#123;</span></span><br><span class="line">        width: 0;</span><br><span class="line">        height: 0;</span><br><span class="line">        margin: 100px auto;</span><br><span class="line">        border-top: 50px solid transparent;</span><br><span class="line">        border-right: 50px solid transparent;</span><br><span class="line">        border-left: 100px solid transparent;</span><br><span class="line">        border-bottom: 75px solid red;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>设置相对定位是为了将盒子移动到事先准备好的padding值的范围内，实现不遮住主盒子内容</strong></p>
-<p><img src="/2020/06/30/%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80/%E6%A0%B7%E5%BC%8F2.png" alt></p>
-<ol start="5">
-<li>为右盒子设置负外边距</li>
-</ol>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.right</span> &#123;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">margin-right</span>: -<span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: chocolate;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.cnblogs.com/2050/archive/2012/08/13/2636467.html" target="_blank" rel="noopener">外边距的详细说明请点击这里</a></p>
-<p><img src="/2020/06/30/%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80/%E6%BC%94%E7%A4%BA4.png" alt></p>
-<ol start="6">
-<li><p>设置最小宽度</p>
-<p>想保证该布局效果正常显示，由于两侧都具有固定的宽度，所以需要给定页面一个最小的宽度，但这并不只是简单的200+200=400px。回想之前<code>left</code>使用了<code>position: relative</code>，所以就意味着在<code>center</code>开始的区域，还存在着一个<code>left</code>的宽度。所以页面的最小宽度应该设置为200+200+200=600px</p>
-</li>
-</ol>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">            <span class="attribute">min-width</span>: <span class="number">600px</span>;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样我们就实现了一个响应式的三栏布局形式</p>
+<p><img src="/2020/04/29/CSS%E5%AE%9E%E7%8E%B0%E4%B8%89%E8%A7%92%E5%BD%A2/%E6%A0%B7%E5%BC%8F4.png" alt></p>
+<p>非常简单的实现三角形的方式，小伙伴赶紧动手感受一下叭！    </p>
 ]]></content>
       <categories>
         <category>CSS</category>
@@ -1013,224 +1144,93 @@
       </tags>
   </entry>
   <entry>
-    <title>canvas的基本使用和动态时钟实现</title>
-    <url>/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>HTML5 <code>&lt;canvas&gt;</code> 元素用于图形的绘制，通过脚本 (通常是JavaScript)来完成，<code>&lt;canvas&gt;</code> 标签只是图形容器，和别的标签不同，我们不在<code>&lt;canvas&gt;</code>标签里面写内容，必须使用脚本来绘制图形。Canvas是一个行内块元素。</p>
-<h4 id="Canvas基础"><a href="#Canvas基础" class="headerlink" title="Canvas基础"></a>Canvas基础</h4><ol>
-<li><p>画布的创建，在绘图之前我们首先是需要一张“纸”，默认情况下 <code>&lt;canvas&gt;</code> 元素没有边框和内容。</p>
-  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;canvas id=<span class="string">"myCanvas"</span> width=<span class="string">"200"</span> height=<span class="string">"100"</span>&gt;&lt;<span class="regexp">/canvas&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>  标签通常需要指定一个id属性 (脚本中经常引用), width 和 height 属性定义的画布的大小</p>
-<a id="more"></a></li>
-<li><p>在<code>&lt;canvas&gt;</code>上绘制</p>
-<ul>
-<li><p>首先要获取到canvas元素</p>
+    <title>圣杯布局</title>
+    <url>/2020/06/30/%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80/</url>
+    <content><![CDATA[<h3 id="圣杯布局"><a href="#圣杯布局" class="headerlink" title="圣杯布局"></a>圣杯布局</h3><p>所谓圣杯布局是前端开发中常用的布局方式也是面试常问的问题。所以必须掌握起来。主要是实现一个<strong>两侧宽度固定，中间宽度自适应的三栏布局</strong>。</p>
+<h4 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h4><ol>
+<li><p>中间元素在布局时候在左右元素的上方</p>
 </li>
-<li><p>创建context对象  (这里我们可以利用判断是否有上下文对象来判断浏览器是否支持)</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> c=<span class="built_in">document</span>.getElementById(<span class="string">"myCanvas"</span>);</span><br><span class="line"><span class="keyword">var</span> ctx=c.getContext(<span class="string">"2d"</span>);</span><br></pre></td></tr></table></figure>
+<li><p>三个布局元素都要向左浮动</p>
 </li>
-</ul>
+<li><p>在父元素身上设置padding值，值的大小为左右盒子的宽度</p>
 </li>
-<li><p>2D上下文</p>
-<ul>
-<li>使用2d绘图上下文提供的方法，可以绘制简单的2D图形，比如矩形、弧形和路径等。2D上下文的起始位置是<code>&lt;canvas&gt;</code>画布的左上角，原点坐标为（0，0）。所有的坐标值都是基于这个点计算的，x越大表示越靠右，y越大表示越靠下。大家在绘图时候可以在脑海中构建一个坐标系。width和height表示在这两个方向上可用的像素数目。</li>
-</ul>
+<li><p>左盒子设margin-left：-100%，设置相对定位，移动盒子为了不挡住中间盒子</p>
 </li>
-<li><p>线条和填充、路径</p>
-<ul>
-<li>路径</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>描述</th>
-<th>属性值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>stroke()</td>
-<td>绘制已定义的路径</td>
-<td>无</td>
-</tr>
-<tr>
-<td>beginPath()</td>
-<td>起始一条路径，或重置当前路径</td>
-<td>无</td>
-</tr>
-<tr>
-<td>closePath()</td>
-<td>创建从当前点回到起始点的路径</td>
-<td>无</td>
-</tr>
-<tr>
-<td>lineTo()</td>
-<td>添加一个新点，然后在画布中创建从该点到最后指定点的线条</td>
-<td>坐标</td>
-</tr>
-<tr>
-<td>arc()</td>
-<td>创建弧/曲线（用于创建圆形或部分圆）</td>
-<td>（x,y,r,sAngle,eAngle,counterclockwise）</td>
-</tr>
-<tr>
-<td>moveTo()</td>
-<td>把路径起始位置移动到画布中的指定点，不创建线条</td>
-<td>坐标</td>
-</tr>
-</tbody></table>
-<ul>
-<li>线条</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>描述</th>
-<th>属性值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>lineCap()</td>
-<td>设置或返回线条的结束端点样式</td>
-<td>butt：向线条的每个末端添加平直的边缘。round：向线条的每个末端添加圆形线帽。square：向线条的每个末端添加正方形线帽。</td>
-</tr>
-<tr>
-<td>lineWidth()</td>
-<td>设置或返回当前的线条宽度</td>
-<td>number：当前线条的宽度，以像素计。</td>
-</tr>
-</tbody></table>
-<ul>
-<li>填充</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>描述</th>
-<th>属性值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>fillStyle()</td>
-<td>设置或返回用于填充绘画的颜色、渐变或模式</td>
-<td>color:指示绘图填充色的CSS颜色值；gradient：用于填充绘图的渐变对象</td>
-</tr>
-<tr>
-<td>fill()</td>
-<td>填充当前绘图（路径）</td>
-<td>无</td>
-</tr>
-</tbody></table>
-<p>实例：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;canvas id=<span class="string">"canvas"</span> width=<span class="string">"200"</span> height=<span class="string">"200"</span>&gt;&lt;<span class="regexp">/canvas&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">var</span> convas = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line">    <span class="keyword">var</span> ctx = convas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">    ctx.moveTo(<span class="number">100</span>, <span class="number">100</span>);</span><br><span class="line">    ctx.lineTo(<span class="number">150</span>, <span class="number">150</span>);</span><br><span class="line">    ctx.lineTo(<span class="number">80</span>, <span class="number">150</span>);</span><br><span class="line">    ctx.lineWidth = <span class="number">5</span>;</span><br><span class="line">    ctx.strokeStyle = <span class="string">"#ccc"</span>;</span><br><span class="line">    ctx.stroke()</span><br><span class="line">    ctx.fill()</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E4%B8%89%E8%A7%92%E5%BD%A2.png" alt="三角形"></p>
+<li><p>右盒子设margin-right：-（盒子自身宽度）</p>
+</li>
+<li><p>中间盒子设置width:100%，实现自适应</p>
+</li>
+<li><p>设置最小宽度，让在宽度达到指定值以后布局不会乱</p>
+<a id="more"></a>
+<h4 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h4></li>
+<li><p>布局设置</p>
 </li>
 </ol>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"center"</span>&gt;</span>主盒子<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span>&gt;</span>左盒子<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span>右盒子<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>设置padding值</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.container</span> </span><br><span class="line">&#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: tomato;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>设置主盒子,和左右盒子基本样式</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.center</span>&#123;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: thistle;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="selector-class">.left</span> &#123;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: chartreuse;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="selector-class">.right</span> &#123;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: chocolate;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/06/30/%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80/%E6%A0%B7%E5%BC%8F01.png" alt></p>
+<ol start="4">
+<li>为左盒子设置相对定位、负外边距</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.left</span> &#123;</span><br><span class="line">            <span class="attribute">position</span>: relative;</span><br><span class="line">            <span class="attribute">left</span>: -<span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">margin-left</span>: -<span class="number">100%</span>;<span class="comment">/*重点*/</span></span><br><span class="line">            <span class="attribute">background-color</span>: chartreuse;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置相对定位是为了将盒子移动到事先准备好的padding值的范围内，实现不遮住主盒子内容</strong></p>
+<p><img src="/2020/06/30/%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80/%E6%A0%B7%E5%BC%8F2.png" alt></p>
 <ol start="5">
-<li><p>文本、转化和保存</p>
-<ul>
-<li><p>文本</p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>描述</th>
-<th>属性值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>font</td>
-<td>设置或返回文本内容的当前字体属性</td>
-<td>font-style、font-variant、font-weight</td>
-</tr>
-<tr>
-<td>textAlign</td>
-<td>设置或返回文本内容的当前对齐方式</td>
-<td>center、left、right、start、end</td>
-</tr>
-<tr>
-<td>textBaseline</td>
-<td>设置或返回在绘制文本时使用的当前文本基线</td>
-<td>middle、top、buttom</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>转化</p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>描述</th>
-<th>属性值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>scale()</td>
-<td>缩放当前绘图至更大或更小</td>
-<td>scalewidth：缩放当前绘图的宽度（1=100%）；scaleheight：缩放当前绘图的高度</td>
-</tr>
-<tr>
-<td>rotate()</td>
-<td>旋转当前绘图</td>
-<td>angle：角度</td>
-</tr>
-<tr>
-<td>transalte()</td>
-<td>重新映射画布上的 (0,0) 位置</td>
-<td>坐标（x,y）</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>保存</p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>描述</th>
-<th>属性值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>save()</td>
-<td>保存当前环境的状态</td>
-<td>无</td>
-</tr>
-<tr>
-<td>restore()</td>
-<td>返回之前保存过的路径状态和属性</td>
-<td>无</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-</li>
-<li><p>绘制弧线的方法（利用arc()方法）</p>
-<p>arc(x,y,r,sAngle,eAngle,counterclockwise)</p>
-<p>x,y就是画这个弧线的圆心坐标；r为半径值；sAngle,eAngle就是起始角和结束角；<em>counterclockwise</em>是表示画的方向，false为顺时针，true为逆时针。</p>
-<p>sAngle,eAngle的具体可见下图（<strong>记住起始位置不是在上面而是在右边</strong>）</p>
-<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E8%A7%92%E5%BA%A6.jpg" alt></p>
+<li>为右盒子设置负外边距</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.right</span> &#123;</span><br><span class="line">            <span class="attribute">float</span>: left;</span><br><span class="line">            <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">margin-right</span>: -<span class="number">200px</span>;</span><br><span class="line">            <span class="attribute">background-color</span>: chocolate;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.cnblogs.com/2050/archive/2012/08/13/2636467.html" target="_blank" rel="noopener">外边距的详细说明请点击这里</a></p>
+<p><img src="/2020/06/30/%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80/%E6%BC%94%E7%A4%BA4.png" alt></p>
+<ol start="6">
+<li><p>设置最小宽度</p>
+<p>想保证该布局效果正常显示，由于两侧都具有固定的宽度，所以需要给定页面一个最小的宽度，但这并不只是简单的200+200=400px。回想之前<code>left</code>使用了<code>position: relative</code>，所以就意味着在<code>center</code>开始的区域，还存在着一个<code>left</code>的宽度。所以页面的最小宽度应该设置为200+200+200=600px</p>
 </li>
 </ol>
-<p>   Tip：当我们使用顺时针画和逆时针画是不同的，要注意区分,请看下面例子，只是画的方向不同，图形也不同</p>
-   <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> convas = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">var</span> ctx = convas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">ctx.beginPath()</span><br><span class="line">ctx.arc(<span class="number">100</span>, <span class="number">100</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="number">1.5</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>) <span class="comment">//顺时针画法</span></span><br><span class="line">ctx.stroke()</span><br><span class="line">ctx.closePath()</span><br><span class="line">ctx.beginPath()</span><br><span class="line">ctx.arc(<span class="number">200</span>, <span class="number">100</span>, <span class="number">50</span>, <span class="number">0</span>, <span class="number">1.5</span> * <span class="built_in">Math</span>.PI, <span class="literal">true</span>)<span class="comment">//逆时针画法</span></span><br><span class="line">ctx.stroke()</span><br><span class="line">ctx.closePath()</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">            <span class="attribute">min-width</span>: <span class="number">600px</span>;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 
-<p>  <img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E5%BC%A7%E7%BA%BF.jpg" alt></p>
-<h4 id="动态时钟案例"><a href="#动态时钟案例" class="headerlink" title="动态时钟案例"></a>动态时钟案例</h4><p>原理：通过canvas绘制时钟的每一个线段，在把当前时间写入到绘图函数中，每一秒钟调用一次绘图函数，就可以实现时钟动态化</p>
-<p>源码如下：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>动态时钟<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-id">#clock</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">border</span>: 1<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-id">#ccc</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        div &#123;</span><br><span class="line">            text-align: center;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"clock"</span> <span class="attr">width</span>=<span class="string">"200px"</span> <span class="attr">height</span>=<span class="string">"200px"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> clo = <span class="built_in">document</span>.getElementById(<span class="string">'clock'</span>);</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> ctx = clo.getContext(<span class="string">'2d'</span>);</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> width = ctx.canvas.width;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> height = ctx.canvas.height;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> r = width / <span class="number">2</span>; <span class="comment">//半径</span></span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawBackground</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">            ctx.save(); <span class="comment">//为了保存清除之前时钟的环境</span></span></span><br><span class="line"><span class="actionscript">            ctx.translate(r, r); <span class="comment">//切换中心点,此时（0，0）就在最中心了，不再是在左上角</span></span></span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="actionscript">            ctx.lineWidth = <span class="number">8</span>;<span class="comment">//线条的宽度</span></span></span><br><span class="line"><span class="javascript">            ctx.arc(<span class="number">0</span>, <span class="number">0</span>, r - <span class="number">4</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>)<span class="comment">//绘制最外圆</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line"><span class="actionscript">            <span class="comment">//画小时数</span></span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> hourNumber = [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">1</span>, <span class="number">2</span>];</span></span><br><span class="line"><span class="actionscript">            ctx.font = <span class="string">'18px Arial'</span>; <span class="comment">//设置文本大小</span></span></span><br><span class="line"><span class="actionscript">            ctx.textAlign = <span class="string">'center'</span>; <span class="comment">//文本居中</span></span></span><br><span class="line"><span class="actionscript">            ctx.textBaseline = <span class="string">'middle'</span>;</span></span><br><span class="line"><span class="actionscript">            hourNumber.forEach(<span class="function"><span class="keyword">function</span><span class="params">(number, i)</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">                <span class="comment">//求出每一个对应的弧度</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">12</span> * i;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> x = <span class="built_in">Math</span>.cos(rad) * (r - <span class="number">30</span>);<span class="comment">//算出每个数字对应的坐标</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> y = <span class="built_in">Math</span>.sin(rad) * (r - <span class="number">30</span>);</span></span><br><span class="line"><span class="actionscript">                ctx.fillText(number, x, y) <span class="comment">//填充文本</span></span></span><br><span class="line">            &#125;);</span><br><span class="line"><span class="actionscript">            <span class="comment">//画每分钟对应的小点点</span></span></span><br><span class="line"><span class="actionscript">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">60</span>; i++) &#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">60</span> * i;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> x = <span class="built_in">Math</span>.cos(rad) * (r - <span class="number">10</span>);</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> y = <span class="built_in">Math</span>.sin(rad) * (r - <span class="number">10</span>);</span></span><br><span class="line">                ctx.beginPath();</span><br><span class="line"><span class="actionscript">                <span class="keyword">if</span> (i % <span class="number">5</span> === <span class="number">0</span>) &#123; <span class="comment">//被5整除也就是小时数</span></span></span><br><span class="line"><span class="actionscript">                    ctx.fillStyle = <span class="string">"#000"</span>; <span class="comment">//要加上，否则由于canvas是基于状态的，所以会把													这里的颜色也改成#ccc</span></span></span><br><span class="line"><span class="javascript">                    ctx.arc(x, y, <span class="number">2.5</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">true</span>)</span></span><br><span class="line"><span class="actionscript">                &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="actionscript">                    ctx.fillStyle = <span class="string">"#ccc"</span></span></span><br><span class="line"><span class="javascript">                    ctx.arc(x, y, <span class="number">1.5</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">true</span>)</span></span><br><span class="line">                &#125;</span><br><span class="line">                ctx.fill()</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawHour</span><span class="params">(hour, minute)</span> </span>&#123;<span class="comment">//画时针函数</span></span></span><br><span class="line"><span class="actionscript">            ctx.save(); <span class="comment">//保存画小时之前的环境</span></span></span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">12</span> * hour; <span class="comment">//每一个小时要旋转的弧度</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> mrad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">12</span> / <span class="number">60</span> * minute; <span class="comment">//分钟数移动的弧度</span></span></span><br><span class="line"><span class="actionscript">            ctx.rotate(rad + mrad); <span class="comment">//画布的旋转</span></span></span><br><span class="line">            ctx.lineWidth = 5;</span><br><span class="line"><span class="actionscript">            ctx.moveTo(<span class="number">0</span>, <span class="number">10</span>); <span class="comment">//移动原点到原点的下面一点，作为画时针的起始位置</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineTo(<span class="number">0</span>, -r / <span class="number">2</span>); <span class="comment">//原点的位置在中心所以往上画要是负数</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineCap = <span class="string">'round'</span>; <span class="comment">//设置线条的结尾形状</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line"><span class="actionscript">            ctx.restore(); <span class="comment">//返回画小时之前的画布的保存过的路径和属性状态</span></span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawMinute</span><span class="params">(minute)</span> </span>&#123;<span class="comment">//画分针函数</span></span></span><br><span class="line"><span class="actionscript">            <span class="comment">//为了区分开画布环境</span></span></span><br><span class="line">            ctx.save();</span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">60</span> * minute; <span class="comment">//每一个小时要旋转的弧度</span></span></span><br><span class="line"><span class="actionscript">            ctx.rotate(rad); <span class="comment">//画布的旋转</span></span></span><br><span class="line">            ctx.lineWidth = 3;</span><br><span class="line"><span class="actionscript">            ctx.moveTo(<span class="number">0</span>, <span class="number">10</span>); <span class="comment">//移动原点到原点的下面一点，作为画时针的起始位置</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineTo(<span class="number">0</span>, -r + <span class="number">20</span>); <span class="comment">//原点的位置在中心所以往上画要是负数,值越大画的越短</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineCap = <span class="string">'round'</span>; <span class="comment">//设置线条的结尾形状</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line">            ctx.restore();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawSecond</span><span class="params">(second)</span> </span>&#123;<span class="comment">//画秒针函数</span></span></span><br><span class="line">            ctx.save();</span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> rad = <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">60</span> * second; <span class="comment">//每一个小时要旋转的弧度</span></span></span><br><span class="line"><span class="actionscript">            ctx.rotate(rad); <span class="comment">//画布的旋转</span></span></span><br><span class="line">            ctx.lineWidth = 2;</span><br><span class="line"><span class="actionscript">            ctx.strokeStyle = <span class="string">"red"</span></span></span><br><span class="line"><span class="actionscript">            ctx.moveTo(<span class="number">0</span>, <span class="number">10</span>); <span class="comment">//移动原点到原点的下面一点，作为画时针的起始位置</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineTo(<span class="number">0</span>, -r + <span class="number">20</span>); <span class="comment">//原点的位置在中心所以往上画要是负数,值越大画的越短</span></span></span><br><span class="line"><span class="actionscript">            ctx.lineCap = <span class="string">'round'</span>; <span class="comment">//设置线条的结尾形状</span></span></span><br><span class="line">            ctx.stroke();</span><br><span class="line">            ctx.restore();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">drawDot</span><span class="params">()</span> </span>&#123;<span class="comment">//画中心点</span></span></span><br><span class="line">            ctx.beginPath();</span><br><span class="line"><span class="actionscript">            ctx.fillStyle = <span class="string">"#fff"</span></span></span><br><span class="line"><span class="javascript">            ctx.arc(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI, <span class="literal">false</span>)</span></span><br><span class="line">            ctx.fill()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="function"><span class="keyword">function</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;<span class="comment">//绘图函数</span></span></span><br><span class="line"><span class="actionscript">            ctx.clearRect(<span class="number">0</span>, <span class="number">0</span>, width, height); <span class="comment">//每秒清除一次canvas再画出时分秒</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> hour = date.getHours();</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> minute = date.getMinutes();</span></span><br><span class="line"><span class="actionscript">            <span class="keyword">var</span> second = date.getSeconds();</span></span><br><span class="line">            drawBackground()</span><br><span class="line">            drawHour(hour, minute);</span><br><span class="line">            drawMinute(minute);</span><br><span class="line">            drawSecond(second);</span><br><span class="line">            drawDot()</span><br><span class="line"><span class="actionscript">            ctx.restore(); <span class="comment">//画完之后</span></span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        draw(); <span class="comment">//避免第一秒无效果</span></span></span><br><span class="line"><span class="actionscript">        setInterval(draw, <span class="number">1000</span>);<span class="comment">//定时器函数每秒调用一次</span></span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>实现结果：</p>
-<p><img src="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/%E6%97%B6%E9%92%9F.jpg" alt="时钟特效"></p>
+<p>这样我们就实现了一个响应式的三栏布局形式</p>
 ]]></content>
       <categories>
-        <category>HTML</category>
+        <category>CSS</category>
       </categories>
       <tags>
-        <tag>JavaScript</tag>
-        <tag>HTML5</tag>
+        <tag>CSS</tag>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue实现刷新当前页面，重载页面数据</title>
+    <url>/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<h3 id="Vue实现刷新当前页面，重载页面数据"><a href="#Vue实现刷新当前页面，重载页面数据" class="headerlink" title="Vue实现刷新当前页面，重载页面数据"></a>Vue实现刷新当前页面，重载页面数据</h3><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前几天在做个人播放器项目时，遇到一个问题：在进行搜索功能时，第一次搜索后，在搜素界面再次搜索时，发现搜索完成只是hash地址发生的转换，但是页面的数据并没有发生转换，也就是没能触发组件的刷新，由于搜索框的组件和搜索内容的组件二者之间不是父子组件也不是兄弟组件，很难实现数据交互。在苦恼许久查阅文档和百度搜索后，成功解决，给出以下解决方案给予参考。</p>
+<p>该方案的应用场景可用于一些需要刷新页面，重载数据时，比如：在管理后台，在执行完，增，删，改，操作的时候等等。</p>
+<a id="more"></a>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>需要用到一个 <a href="https://cn.vuejs.org/v2/api/#provide-inject" target="_blank" rel="noopener">provide / inject</a> 这对用例。这对选项需要一起使用，以允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>在根组件中，也就是App.vue中写如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">        &lt;router-view v-if&#x3D;&quot;isRouterAlive&quot;&gt;&lt;&#x2F;router-view&gt;</span><br><span class="line">      	&lt;index v-if&#x3D;&quot;isRouterAlive&quot;&#x2F;&gt;</span><br><span class="line">      &#x2F;*只要是组件想要刷新的主要在组件中加上v-if&#x3D;&quot;isRouterAlive&quot;即可*&#x2F;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"> </span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;App&#39;,</span><br><span class="line">  provide ()&#123;</span><br><span class="line">     return &#123;</span><br><span class="line">       reload:this.reload</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  data()&#123;</span><br><span class="line">    return &#123;</span><br><span class="line">       isRouterAlive:true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods:&#123;</span><br><span class="line">    reload ()&#123;</span><br><span class="line">       this.isRouterAlive &#x3D; false</span><br><span class="line">       this.$nextTick(function()&#123;</span><br><span class="line">          this.isRouterAlive &#x3D; true</span><br><span class="line">       &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  components:&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在触发的子组件中引用即可</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export default&#123;</span><br><span class="line">	inject:[&#39;reload&#39;],</span><br><span class="line">	data()&#123;</span><br><span class="line">		return&#123;</span><br><span class="line">			inputValue:&#39;&#39;</span><br><span class="line">	 &#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	method:&#123;</span><br><span class="line">		toResult()&#123;</span><br><span class="line">		this.reload()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Tip: 只需要在子组件中引入inject:[‘reload’]；然后调用reload()方法即可实现刷新；是不是很简单方便~~</p>
+<p>在此分享给大家</p>
+]]></content>
+      <categories>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
       </tags>
   </entry>
 </search>
