@@ -1328,4 +1328,138 @@
         <tag>TCP/IP</tag>
       </tags>
   </entry>
+  <entry>
+    <title>HTML+CSS实现明星卡片制作</title>
+    <url>/2020/04/15/HTML-CSS%E5%AE%9E%E7%8E%B0%E6%98%8E%E6%98%9F%E5%8D%A1%E7%89%87%E5%88%B6%E4%BD%9C/</url>
+    <content><![CDATA[<h2 id="HTML-CSS实现明星卡片制作"><a href="#HTML-CSS实现明星卡片制作" class="headerlink" title="HTML+CSS实现明星卡片制作"></a>HTML+CSS实现明星卡片制作</h2><p>今天在B站偶然刷到一个视频，点击跳转，视频是制作一张折叠卡片，觉得效果很不错，并且对CSS3和HTML5都能进一步学习和复习，所以仿作一个易烊千玺卡片，喜欢的小伙伴一起动手做起来叭。</p>
+<h4 id="效果实现"><a href="#效果实现" class="headerlink" title="效果实现"></a>效果实现</h4><p>卡片的首页是一张图片</p>
+<a id="more"></a>
+<p><img src="/2020/04/15/HTML-CSS%E5%AE%9E%E7%8E%B0%E6%98%8E%E6%98%9F%E5%8D%A1%E7%89%87%E5%88%B6%E4%BD%9C/11.png" alt="易烊千玺"></p>
+<p>在鼠标经过后有一个卡片翻开的效果，并且有视频播放，卡片的底页会写文本，鼠标离开后自动卡片自动合上</p>
+<p><img src="/2020/04/15/HTML-CSS%E5%AE%9E%E7%8E%B0%E6%98%8E%E6%98%9F%E5%8D%A1%E7%89%87%E5%88%B6%E4%BD%9C/22.png" alt></p>
+<h5 id="核心思想：三个盒子重叠在一起，鼠标未经过的时，第一个盒子（卡片首页）显示，鼠标经过时，第一个盒子和第二个盒子的容器（二者在一个容器里）沿着Y轴转动180°就可以实现背面（第二个第三个盒子）卡片显示。"><a href="#核心思想：三个盒子重叠在一起，鼠标未经过的时，第一个盒子（卡片首页）显示，鼠标经过时，第一个盒子和第二个盒子的容器（二者在一个容器里）沿着Y轴转动180°就可以实现背面（第二个第三个盒子）卡片显示。" class="headerlink" title="核心思想：三个盒子重叠在一起，鼠标未经过的时，第一个盒子（卡片首页）显示，鼠标经过时，第一个盒子和第二个盒子的容器（二者在一个容器里）沿着Y轴转动180°就可以实现背面（第二个第三个盒子）卡片显示。"></a>核心思想：三个盒子重叠在一起，鼠标未经过的时，第一个盒子（卡片首页）显示，鼠标经过时，第一个盒子和第二个盒子的容器（二者在一个容器里）沿着Y轴转动180°就可以实现背面（第二个第三个盒子）卡片显示。</h5><hr>
+<h4 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h4><p>HTML部分</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>折叠卡片<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"./card.css"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 封面页 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-outside"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-outside-container"</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 正面 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-front"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-front-top"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://pic1.win4000.com/wallpaper/2018-10-17/5bc690bbf1a4c.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">                        <span class="comment">&lt;!-- 图片我为了大家能够能直接复制代码使用用了网上的链接 --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-front-footer"</span>&gt;</span></span><br><span class="line">                        View Me</span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 正面结束 --&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 反面 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-back"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">video</span> <span class="attr">class</span>=<span class="string">"video-container"</span> <span class="attr">autoplay</span> <span class="attr">muted</span> <span class="attr">loop</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"https://ugcsjy.qq.com/uwMROfz2r57EIaQXGdGnC2ddDmY0gCKxs_YQn4ev8GMVk_hh/shg_17463489_50001_2bc92c4ea3673275b3b99c5e4b9fb949.f622.mp4?sdtfrom=v1010&amp;guid=81692f1683159df52f51fdbf768b6b0d&amp;vkey=7FF1E36F39042804691528609695C6488A4DA61DB6C7C1C9BA6DCBA5E4CD711144DB683CD6BA1104CCF10B015FD5D06B68F64262669415CD2EAF7239ECB0C84F425FDB3AFC4E28BCCE9A67BA0C25CB86699BF264860069226577F88FF6C4C27CC4F767A261AFFAFF94886719B8101897C0D4558D3E2E6045410FFC1E4120B89F"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 视频我为了大家能够能直接复制代码使用也用了网上的链接，可自行更改 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 封面页结束 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 封底页 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-inside"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-inside-container"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h3</span>&gt;</span>For urban lovers<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>Hans your smile,had been flurried my time passag <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>love one i think the smile boy<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"btn"</span>&gt;</span>view deals<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 封底页结束 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>CSS部分代码</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">html</span>,</span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(to right, #ebdabb, #e3d96c)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">340px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#e3d9c6</span>;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="comment">/* 块级盒子垂直居中 */</span></span><br><span class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(-<span class="number">50%</span>, -<span class="number">50%</span>);</span><br><span class="line">    <span class="attribute">transition</span>: all <span class="number">1s</span> ease;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-outside</span>,</span><br><span class="line"><span class="selector-class">.card-inside</span> &#123;</span><br><span class="line">    <span class="comment">/* 父级元素有定位 */</span></span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">340px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-outside</span> &#123;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">100</span>;</span><br><span class="line">    <span class="comment">/* 透视表示从那个位置看元素，加了透视动画效果才能更清晰</span></span><br><span class="line"><span class="comment">    并且透视必须加给父盒子 */</span></span><br><span class="line">    <span class="attribute">perspective</span>: <span class="number">1000px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-front</span>,</span><br><span class="line"><span class="selector-class">.card-back</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#e3d9c6</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-outside-container</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="comment">/* transform-style控制子元素是否开启三维立体环境 */</span></span><br><span class="line">    <span class="attribute">transform-style</span>: preserve-<span class="number">3</span>d;</span><br><span class="line">    <span class="comment">/* 旋转的中心点 */</span></span><br><span class="line">    <span class="attribute">transform-origin</span>: left;</span><br><span class="line">    <span class="attribute">transition</span>: all <span class="number">1s</span> ease;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.card-outside-container</span> &#123;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">rotateY</span>(-<span class="number">180deg</span>);</span><br><span class="line">    <span class="comment">/* 鼠标经过的时候盒子容器旋转180° */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">600px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-front-top</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">260px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: pink;</span><br><span class="line">    <span class="comment">/* 裁剪路径变成多边形 */</span></span><br><span class="line">    <span class="attribute">clip-path</span>: <span class="built_in">polygon</span>(<span class="number">0</span> <span class="number">0</span>, <span class="number">100%</span> <span class="number">0</span>, <span class="number">100%</span> <span class="number">90%</span>, <span class="number">57%</span> <span class="number">90%</span>, <span class="number">50%</span> <span class="number">100%</span>, <span class="number">43%</span> <span class="number">90%</span>, <span class="number">0</span> <span class="number">90%</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-front-footer</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">26px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#ff40a1</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: <span class="number">600</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-front-top</span> <span class="selector-tag">img</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-back</span> &#123;</span><br><span class="line">    <span class="comment">/* 卡片的背面要旋转180°让卡片展开的时候背面的视频可以出现 */</span></span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">rotateY</span>(<span class="number">180deg</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.video-container</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">object-fit</span>: cover;</span><br><span class="line">    <span class="attribute">clip-path</span>: <span class="built_in">polygon</span>(<span class="number">0</span> <span class="number">0</span>, <span class="number">100%</span> <span class="number">0</span>, <span class="number">90%</span> <span class="number">50%</span>, <span class="number">100%</span> <span class="number">100%</span>, <span class="number">0</span> <span class="number">100%</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-inside</span> &#123;</span><br><span class="line">    <span class="comment">/* 让封底页实现在封面页的下面 */</span></span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">99</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-inside-container</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="comment">/* 将主轴设为纵向 */</span></span><br><span class="line">    <span class="attribute">flex-direction</span>: column;</span><br><span class="line">    <span class="comment">/* 元素先把行填满剩下的元素居中 */</span></span><br><span class="line">    <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">    <span class="attribute">align-items</span>: center;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">24px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#ff40a1</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: <span class="number">700</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-inside-container</span> <span class="selector-tag">p</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.card-inside-container</span> <span class="selector-class">.btn</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">90%</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">3px</span> solid <span class="number">#ff40a1</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#ff40a1</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="学习总结"><a href="#学习总结" class="headerlink" title="学习总结"></a>学习总结</h4><ol>
+<li><p><strong>transition-timing-function</strong>属性</p>
+<ul>
+<li><p>指定切换效果的速度，通常用简写的方式也就是直接作为transition的第三个参数</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>linear</td>
+<td>规定以相同速度开始至结束的过渡效果（等于 cubic-bezier(0,0,1,1)）</td>
+</tr>
+<tr>
+<td>ease</td>
+<td>规定慢速开始，然后变快，然后慢速结束的过渡效果（cubic-bezier(0.25,0.1,0.25,1)）</td>
+</tr>
+<tr>
+<td>cubic-bezier(<em>n</em>,<em>n</em>,<em>n</em>,<em>n</em>)</td>
+<td>在 cubic-bezier 函数中定义自己的值。可能的值是 0 至 1 之间的数值。</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p><strong>transform-style: preserve-3d</strong>; </p>
+<p>默认是不开启的</p>
+<p><code>transform-style</code>控制子元素是否开启三维立体环境，代码要写给父级，影响的是子盒子。</p>
+</li>
+<li><p><strong>object-fit</strong> 属性指定元素的内容应该如何去适应指定容器的高度与宽度</p>
+<ul>
+<li><p>object-fit 一般用于 <code>img</code> 和 <code>video</code> 标签，一般可以对这些原素进行保留原始比例的剪切、缩放或者直接进行拉伸等</p>
+</li>
+<li><p>cover有点类似于视频或者图片（保持原比例下）充满整个盒子</p>
+</li>
+<li><table>
+<thead>
+<tr>
+<th>属性值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fill</td>
+<td>默认，不保证保持原有的比例，内容拉伸满整个内容容器</td>
+</tr>
+<tr>
+<td>contain</td>
+<td>保持原有尺寸比例。内容被缩放</td>
+</tr>
+<tr>
+<td>cover</td>
+<td>保持原有尺寸比例。但部分内容可能被剪切，类似于放大</td>
+</tr>
+<tr>
+<td>none</td>
+<td>保留原有元素内容的长度和宽度，也就是说内容不会被重置</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p><strong>clip-path</strong>属性;意味裁剪路径的意思，让我们可以很便捷的生成各种几何图形;是CSS的新属性</p>
+<ul>
+<li><p>clip-path 通过定义特殊的路径，实现我们想要的图形。而这个路径，正是 SVG 中的 path </p>
+<table>
+<thead>
+<tr>
+<th>属性值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>circle</td>
+<td>裁剪成圆形</td>
+</tr>
+<tr>
+<td>ellipse</td>
+<td>裁剪成椭圆形</td>
+</tr>
+<tr>
+<td>polygon</td>
+<td>裁剪成多边形</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>简单理解为：属性值带的参数其实就是每一个的点每个点用逗号分开，数值（50%，0）可以理解为坐标（x，y）。</p>
+</li>
+<li><p>例如<code>clip-path: polygon(50% 0,0 100%, 100% 100%);</code>就是(50%,0) 和 (0,100%) , (100%,100%)把这三个点连接起来就是绘制后的图形也就是下图的三角形ABC</p>
+<p><img src="/2020/04/15/HTML-CSS%E5%AE%9E%E7%8E%B0%E6%98%8E%E6%98%9F%E5%8D%A1%E7%89%87%E5%88%B6%E4%BD%9C/33.png" alt></p>
+</li>
+</ul>
+</li>
+<li><p><strong>box-border</strong>属性：定义了计算一个元素的总宽度和总高度的方法</p>
+<p>在css盒模型的默认定义里，你对一个元素所设置的width 与 height只会应用到这个元素的内容区。如果这个元素有任何的border或padding，绘制到屏幕上时的盒子宽度和高度会加上设置的边框和内边距值。所以一旦添加border和padding就需要不断的去减小width，确保盒子总大小不变。</p>
+<ul>
+<li><p><code>content-box</code> 是默认值。如果你设置一个元素的宽为100px，那么这个元素的内容区会有100px 宽，并且任何边框和内边距的宽度都会被增加到最后绘制出来的元素宽度中。</p>
+</li>
+<li><p><code>border-box</code> 告诉浏览器：你想要设置的边框和内边距的值是包含在width内的。也就是说，如果你将一个元素的width设为100px（宽度帮你定死），那么这100px会包含它的border和padding，内容区的实际宽度是width减去(border + padding)的值。这样就不需要我们再进行计算。大多数情况下，这使得我们更容易地设定一个元素的宽高。</p>
+<p><em><code>width</code> = border + padding + 内容的宽度</em></p>
+<p><em><code>height</code> = border + padding + 内容的高度</em></p>
+</li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>CSS</category>
+      </categories>
+      <tags>
+        <tag>CSS</tag>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
 </search>
