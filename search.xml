@@ -1608,7 +1608,7 @@
   </entry>
   <entry>
     <title>Vue中使用TypeScript</title>
-    <url>/2020/08/14/Vue%E4%B8%AD%E4%BD%BF%E7%94%A8TypeScript/</url>
+    <url>/2020/08/13/Vue%E4%B8%AD%E4%BD%BF%E7%94%A8TypeScript/</url>
     <content><![CDATA[<h3 id="vue-property-decorator组件的使用"><a href="#vue-property-decorator组件的使用" class="headerlink" title="vue-property-decorator组件的使用"></a>vue-property-decorator组件的使用</h3><p>​     Tip: 这篇文章是我用到了typescript后写的，因为刚接触没多久，写得不好多多海涵，栗子用了另外一位简书作者的，在此表示感谢，vue3.x开始会慢慢向typescript靠拢，所以学习ts是非常有必要的，<strong>阅读本文需要具备一定的TypeScript基础和vue基础。</strong></p>
 <p>当我们在<code>vue</code>单文件中使用<code>TypeScript</code>时,引入<code>vue-property-decorator</code>之后,<code>script</code>中的标签就变为这样:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script lang&#x3D;&quot;ts&quot;&gt;</span><br><span class="line">    import &#123;Vue, Component&#125; from &#39;vue-property-decorator&#39;;</span><br><span class="line"></span><br><span class="line">    @Component(&#123;&#125;)</span><br><span class="line">    export default class &quot;组件名&quot; extends Vue&#123;</span><br><span class="line">        ValA: string &#x3D; &quot;hello world&quot;;</span><br><span class="line">        ValB: number &#x3D; 1;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
