@@ -1606,4 +1606,100 @@
         <tag>Vue</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Vue中使用TypeScript</title>
+    <url>/2020/08/14/Vue%E4%B8%AD%E4%BD%BF%E7%94%A8TypeScript/</url>
+    <content><![CDATA[<h3 id="vue-property-decorator组件的使用"><a href="#vue-property-decorator组件的使用" class="headerlink" title="vue-property-decorator组件的使用"></a>vue-property-decorator组件的使用</h3><p>​     Tip: 这篇文章是我用到了typescript后写的，因为刚接触没多久，写得不好多多海涵，栗子用了另外一位简书作者的，在此表示感谢，vue3.x开始会慢慢向typescript靠拢，所以学习ts是非常有必要的，<strong>阅读本文需要具备一定的TypeScript基础和vue基础。</strong></p>
+<p>当我们在<code>vue</code>单文件中使用<code>TypeScript</code>时,引入<code>vue-property-decorator</code>之后,<code>script</code>中的标签就变为这样:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script lang&#x3D;&quot;ts&quot;&gt;</span><br><span class="line">    import &#123;Vue, Component&#125; from &#39;vue-property-decorator&#39;;</span><br><span class="line"></span><br><span class="line">    @Component(&#123;&#125;)</span><br><span class="line">    export default class &quot;组件名&quot; extends Vue&#123;</span><br><span class="line">        ValA: string &#x3D; &quot;hello world&quot;;</span><br><span class="line">        ValB: number &#x3D; 1;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>等同于：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script lang&#x3D;&quot;es6&quot;&gt;</span><br><span class="line">    import Vue from &#39;vue&#39;;</span><br><span class="line"></span><br><span class="line">    export default &#123;</span><br><span class="line">        data()&#123;</span><br><span class="line">            return &#123;</span><br><span class="line">                ValA: &#39;hello world&#39;,</span><br><span class="line">                ValB: 1</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>把我们需要用到的属性给导入进来，在这里我导入了Component；这是<code>vue-property-decorator</code>组件提供的属性，至于有哪些属性下面我会说到。</p>
+<p>相信很多小伙伴也注意到我使用了和以往不同的写法，使用了es6的类的写法，至于为何可以使用这种写法就是因为这个组件是完全依赖于<code>vue-class-component</code>；这是尤大神写的支持vue的组件，<a href="https://www.jianshu.com/p/2f65e9dea4f3" target="_blank" rel="noopener">具体可看</a>。建议先看看~</p>
+<p><strong>Tip:(很重要的一点)：在类中声明的变量其实和data中声明的是一样的，都是有双向绑定的；也就是例子中的ValA和ValB有了类型指定同时能双向绑定</strong></p>
+<h3 id="vue-property-decorator组件的属性"><a href="#vue-property-decorator组件的属性" class="headerlink" title="vue-property-decorator组件的属性"></a>vue-property-decorator组件的属性</h3><p>这个组件完全依赖于<code>vue-class-component</code>.它具备以下几个属性:</p>
+<ul>
+<li><p>@Component (完全继承于<code>vue-class-component</code>)</p>
+</li>
+<li><p>@Emit</p>
+</li>
+<li><p>@Inject</p>
+</li>
+<li><p>@Provice</p>
+</li>
+<li><p>@Prop</p>
+</li>
+<li><p>@Watch</p>
+</li>
+<li><p>@Model</p>
+</li>
+<li><p>Mixins  (在<code>vue-class-component</code>中定义);</p>
+</li>
+</ul>
+<ol>
+<li><h5 id="Component"><a href="#Component" class="headerlink" title="@Component"></a><strong>@Component</strong></h5><p>是 vue-class-component 中的装饰器修饰组件，用来为组件类添加各种“装饰属性”</p>
+<p>简单的说，就是框架负责为类额外添加一些成员和功能，而开发者负责通过 <strong>注解</strong> 的方式 将数据传给框架，框架收到 <strong>注解</strong> 传入的数据后，可以用在类上。</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&lt;script lang=<span class="string">"ts"</span>&gt;</span><br><span class="line"><span class="keyword">import</span> &#123; Component, Vue &#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span><br><span class="line"><span class="keyword">import</span> MenuBar <span class="keyword">from</span> <span class="string">'./components/MenuBar.vue'</span></span><br><span class="line"><span class="keyword">import</span> ItemList <span class="keyword">from</span> <span class="string">'./components/ItemList.vue'</span></span><br><span class="line"><span class="keyword">import</span> MemoEditor <span class="keyword">from</span> <span class="string">'./components/MemoEditor.vue'</span></span><br><span class="line"><span class="keyword">import</span> test <span class="keyword">from</span> <span class="string">'./components/test.vue'</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  components: &#123;</span><br><span class="line">    MenuBar,</span><br><span class="line">    ItemList,</span><br><span class="line">    MemoEditor,</span><br><span class="line">    test</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> App <span class="keyword">extends</span> Vue &#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到@component中传的是一个对象，对象中可以有多个属性，这里写入了 components属性；这个属性是被注入到了Vue框架中，然后通过类继承的方式把Vue中的值给到App类，从而App就有了装饰器里的属性，同样的这样的好处是Vue有了这些属性后以后的类只要继承了Vue就有了对应的属性。</p>
+<p><strong>当然@component的声明还能是表示在文件中使用组件，所以一般都会声明</strong></p>
+</li>
+<li><h5 id="Emit"><a href="#Emit" class="headerlink" title="@Emit"></a><strong>@Emit</strong></h5><p>  主要用于事件监听与触发，熟悉Vue的小伙伴都知道Vue提供了两个函数$emit和$on。主要用于兄弟组件的传值，通过借助中间组件eventbus的方式，在要监听事件的组件中写$on；在要触发事件的组件中写上$emit，就可以实现兄弟（非父子）组件之间的值传递。</p>
+<p>  但在这个组件中，为ts提供了更加方便的用法。也就是使用@emit装饰器</p>
+  <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&lt;script lang=<span class="string">"ts"</span>&gt;</span><br><span class="line">    <span class="keyword">import</span> &#123;Vue, Component, Emit&#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Component</span>()</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="string">"组件名"</span> <span class="keyword">extends</span> Vue&#123;</span><br><span class="line">        mounted()&#123;</span><br><span class="line">            <span class="keyword">this</span>.$on(<span class="string">'emit-todo'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(n)</span><br><span class="line">            &#125;)</span><br><span class="line">			<span class="comment">/*$on就是监听emit-todo事件，并且对emit-todo得到的值进行一个操作*/</span></span><br><span class="line">            <span class="keyword">this</span>.emitTodo(<span class="string">'world'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Emit</span>()</span><br><span class="line">        emitTodo(n: <span class="built_in">string</span>)&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'hello'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>  上面的代码写成vue用的es6语法就是：</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script lang&#x3D;&quot;es6&quot;&gt;</span><br><span class="line">    import Vue from &#39;vue&#39;;</span><br><span class="line"></span><br><span class="line">    export default &#123;</span><br><span class="line">        mounted()&#123;</span><br><span class="line">            this.$on(&#39;emit-todo&#39;, function(n) &#123;</span><br><span class="line">                console.log(n)</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">            this.emitTodo(&#39;world&#39;);</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            emitTodo(n)&#123;</span><br><span class="line">                console.log(&#39;hello&#39;);</span><br><span class="line">                &#x2F;*$emit就是触发emitTodo事件，并且把n值传递到$on中，on中对n值进行操作*&#x2F;</span><br><span class="line">                this.$emit(&#39;emit-todo&#39;, n);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>  通过对比我们会发现@Emit()其实就是把$emit给写入它装饰的类中，这样就省去了对事件的触发操作。</p>
+<p>  当然如果你想触发特定的事件不想触发这个它装饰的事件的话，只要在@Emit()中传入要触发的事件即可请看下面例子</p>
+  <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&lt;script lang=<span class="string">"ts"</span>&gt;</span><br><span class="line">    <span class="keyword">import</span> &#123;Vue, Component, Emit&#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Component</span>(&#123;&#125;)</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="string">"组件名"</span> <span class="keyword">extends</span> Vue&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Emit</span>(<span class="string">'reset'</span>)</span><br><span class="line">        emitTodo(n: <span class="built_in">string</span>)&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="Watch"><a href="#Watch" class="headerlink" title="@Watch"></a><strong>@Watch</strong></h5><p>  顾名思义，就是监听，只不过监听的是页面数据的变化比如说当值发生改变的时候触发的函数</p>
+<p>  我们可以利用<code>vue-property-decorator</code>提供的<code>@Watch</code>装饰器来替换<code>Vue</code>中的<code>watch</code>属性,以此来监听值的变化。请看下面例子：</p>
+  <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&lt;script lang=<span class="string">"ts"</span>&gt;</span><br><span class="line">    <span class="keyword">import</span> &#123;Vue, Component, Watch&#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Component</span>(&#123;&#125;)</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="string">"组件名"</span> <span class="keyword">extends</span> Vue&#123;</span><br><span class="line">		<span class="meta">@watch</span>(<span class="string">'child'</span>)<span class="comment">/*child的一旦发生改变就会触发onchangeValue*/</span></span><br><span class="line">        onchangeValue(newVal: <span class="built_in">string</span>, oldVal: <span class="built_in">string</span>)&#123;</span><br><span class="line">            <span class="comment">//todo...</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="meta">@Watch</span>(<span class="string">'person'</span>, &#123;immediate: <span class="literal">true</span>, deep: <span class="literal">true</span>&#125;)</span><br><span class="line">		onChangeValue(newVal: Person, oldVal: Person)&#123;</span><br><span class="line">    		<span class="comment">// todo...</span></span><br><span class="line">		&#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>  转成Es6的vue格式如下</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export default&#123;</span><br><span class="line">    watch: &#123;</span><br><span class="line">        &#39;child&#39;: this.onChangeValue,&#x2F;*child的一旦发生改变就会触发*&#x2F;</span><br><span class="line">        &#39;person&#39;: &#123;</span><br><span class="line">            handler: &#39;onChangeValue&#39;,</span><br><span class="line">            immediate: true,</span><br><span class="line">            deep: true</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        onChangeValue(newVal, oldVal)&#123;</span><br><span class="line">            &#x2F;&#x2F; todo...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  @watch()有两参数，第一个参数是监听的值，第二个参数是所装饰的函数即监听到属性变化之后的操作.比如deep：true就是表示深度监听。</p>
+<p>  注意用@watch只会监听到它下面的一个方法，如果有多个监听要写多个Watch。</p>
+</li>
+<li><h5 id="Prop"><a href="#Prop" class="headerlink" title="@Prop"></a><strong>@Prop</strong></h5><p>我们在使用<code>Vue</code>时有时会遇到子组件接收父组件传递来的参数.我们需要定义<code>Prop</code>属性。</p>
+<p>比如下面例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export default &#123;</span><br><span class="line">  props: &#123;</span><br><span class="line">    propA: &#123;</span><br><span class="line">      type: Number</span><br><span class="line">    &#125;,</span><br><span class="line">    propB: &#123;</span><br><span class="line">      default: &#39;default value&#39;</span><br><span class="line">    &#125;,</span><br><span class="line">    propC: &#123;</span><br><span class="line">      type: [String, Boolean]</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>利用@prop装饰器的方法改造如下：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&lt;script lang=<span class="string">"ts"</span>&gt;</span><br><span class="line">    <span class="keyword">import</span> &#123;Vue, Component, Prop&#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Component</span>(&#123;&#125;)</span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="string">"组件名"</span> <span class="keyword">extends</span> Vue&#123;</span><br><span class="line">        <span class="meta">@Prop</span>(<span class="built_in">Number</span>) propA!: <span class="built_in">number</span>;</span><br><span class="line">        <span class="meta">@Prop</span>(&#123;<span class="keyword">default</span>: <span class="string">'default value'</span>&#125;) propB!: <span class="built_in">string</span>;</span><br><span class="line">        <span class="meta">@propC</span>([<span class="built_in">String</span>, <span class="built_in">Boolean</span>]) propC: <span class="built_in">string</span> | <span class="built_in">boolean</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>@Prop</code>接受一个参数可以是类型变量或者对象或者数组.<code>@Prop</code>接受的类型比如<code>Number</code>是<code>JavaScript</code>的类型,之后定义的属性类型则是<code>TypeScript</code>的类型.</p>
+</li>
+<li><h5 id="Model"><a href="#Model" class="headerlink" title="@Model"></a>@Model</h5><p> <code>Vue</code>组件提供<code>model</code>: <code>{prop?: string, event?: string}</code>让我们可以定制<code>prop</code>和<code>event</code>.<br> 默认情况下，一个组件上的<code>v-model</code> 会把 <code>value</code>用作 <code>prop</code>且把 <code>input</code>用作 <code>event</code>，说白了就是对input的value进行属性绑定，对input绑定了方法；但是一些输入类型比如单选框和复选框按钮可能想使用 <code>value prop</code>来达到不同的目的。使用<code>model</code>选项可以回避这些情况产生的冲突。</p>
+<p>给出官网例子</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Vue.component(&#39;my-checkbox&#39;, &#123;</span><br><span class="line">  model: &#123;</span><br><span class="line">    prop: &#39;checked&#39;,</span><br><span class="line">    event: &#39;change&#39;</span><br><span class="line">  &#125;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    &#x2F;&#x2F; this allows using the &#96;value&#96; prop for a different purpose</span><br><span class="line">    value: String,</span><br><span class="line">    &#x2F;&#x2F; use &#96;checked&#96; as the prop which take the place of &#96;value&#96;</span><br><span class="line">    checked: &#123;</span><br><span class="line">      type: Number,</span><br><span class="line">      default: 0</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#x2F;&#x2F; ...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;my-checkbox v-model&#x3D;&quot;foo&quot; value&#x3D;&quot;some value&quot;&gt;&lt;&#x2F;my-checkbox&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码相当于：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;my-checkbox</span><br><span class="line">  :checked&#x3D;&quot;foo&quot;</span><br><span class="line">  @change&#x3D;&quot;val &#x3D;&gt; &#123; foo &#x3D; val &#125;&quot;</span><br><span class="line">  value&#x3D;&quot;some value&quot;&gt;</span><br><span class="line">&lt;&#x2F;my-checkbox&gt;</span><br></pre></td></tr></table></figure>
+
+<p>那么使用使用<code>vue-property-decorator</code>提供的<code>@Model</code>改造上面的例子</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Vue, Component, Model&#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> myCheck <span class="keyword">extends</span> Vue&#123;</span><br><span class="line">   <span class="meta">@Model</span> (<span class="string">'change'</span>, &#123;<span class="keyword">type</span>: <span class="built_in">Boolean</span>&#125;)  checked!: <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>@Model()</code>接收两个参数, 第一个是<code>event</code>值, 第二个是<code>prop</code>的类型说明, 与<code>@Prop</code>类似, 这里的类型要用<code>JS</code>的. 后面在接着是<code>prop</code>和在<code>TS</code>下的类型说明.</p>
+</li>
+<li><h5 id="Mixins"><a href="#Mixins" class="headerlink" title="Mixins"></a>Mixins</h5><p>混合模式；混入 (mixin) 提供了一种非常灵活的方式，来分发 Vue 组件中的可复用功能。一个混入对象可以包含任意组件选项。当组件使用混入对象时，所有混入对象的选项将被“混合”进入该组件本身的选项。</p>
+</li>
+</ol>
+<p>因为我个人也刚学ts没多久，写得不好，还请多多海涵。后续会继续更新。</p>
+]]></content>
+      <categories>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
 </search>
