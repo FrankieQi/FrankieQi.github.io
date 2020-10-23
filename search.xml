@@ -2007,11 +2007,8 @@
   </entry>
   <entry>
     <title>Vue中的computed</title>
-    <url>/2020/10/23/Vue%E4%B8%AD%E7%9A%84computed/</url>
-    <content><![CDATA[<hr>
-<p>title: Vue中的computed<br>date: 2020-10-06 14:56:30<br>tags:<br>    - Vue<br>categories:<br>    - Vue<br>author: FrankieQi</p>
-<hr>
-<p>method和computed都是我们在vue项目中很常用的两个属性，相信大家对method不是很陌生但对computed却是了解的不多（至少我是这样的），今天刚好和同事聊到这个，所以本篇文章主要来讲讲compued这个属性，小伙伴们可以进行参考学习。</p>
+    <url>/2020/10/05/Vue%E4%B8%AD%E7%9A%84computed/</url>
+    <content><![CDATA[<p>method和computed都是我们在vue项目中很常用的两个属性，相信大家对method不是很陌生但对computed却是了解的不多（至少我是这样的），今天刚好和同事聊到这个，所以本篇文章主要来讲讲compued这个属性，小伙伴们可以进行参考学习。</p>
 <h3 id="computed定义"><a href="#computed定义" class="headerlink" title="computed定义"></a>computed定义</h3><p><strong>计算属性</strong>可用于快速计算视图（<strong>View</strong>）中显示的属性。这些计算将被缓存，并且只在需要时更新。computed设置的初衷是能够解决复杂的计算，而不是直接在模板字符串里进行运算。可以看以下的例子：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;example&quot;&gt;</span><br><span class="line">  &lt;p&gt;Original message: &quot;&#123;&#123; message &#125;&#125;&quot;&lt;&#x2F;p&gt;</span><br><span class="line">  &lt;p&gt;Computed reversed message: &quot;&#123;&#123; reversedMessage &#125;&#125;&quot;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">var vm &#x3D; new Vue(&#123;</span><br><span class="line">  el: &#39;#example&#39;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    message: &#39;Hello&#39;</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    &#x2F;&#x2F; 计算属性的 getter</span><br><span class="line">    reversedMessage: function () &#123;</span><br><span class="line">      &#x2F;&#x2F; &#96;this&#96; 指向 vm 实例</span><br><span class="line">      return this.message.split(&#39;&#39;).reverse().join(&#39;&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -2068,6 +2065,12 @@
 <li>computed比较适合对多个变量或者对象进行处理后返回一个结果值，也就是数多个变量中的某一个值发生了变化则我们监控的这个值也就会发生变化，举例：购物车里面的商品列表和总金额之间的关系，只要商品列表里面的商品数量发生变化，或减少或增多或删除商品，总金额都应该发生变化。这里的这个总金额使用computed属性来进行计算是最好的选择</li>
 </ol>
 ]]></content>
+      <categories>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
   </entry>
   <entry>
     <title>Promise中的all和race</title>
