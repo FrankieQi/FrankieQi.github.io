@@ -2005,4 +2005,71 @@
         <tag>MongoDB</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Vue中的computed</title>
+    <url>/2020/10/23/Vue%E4%B8%AD%E7%9A%84computed/</url>
+    <content><![CDATA[<p>method和computed都是我们在vue项目中很常用的两个属性，相信大家对method不是很陌生但对computed却是了解的不多（至少我是这样的），今天刚好和同事聊到这个，所以本篇文章主要来讲讲compued这个属性，小伙伴们可以进行参考学习。</p>
+<h3 id="computed定义"><a href="#computed定义" class="headerlink" title="computed定义"></a>computed定义</h3><p><strong>计算属性</strong>可用于快速计算视图（<strong>View</strong>）中显示的属性。这些计算将被缓存，并且只在需要时更新。computed设置的初衷是能够解决复杂的计算，而不是直接在模板字符串里进行运算。可以看以下的例子：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;example&quot;&gt;</span><br><span class="line">  &lt;p&gt;Original message: &quot;&#123;&#123; message &#125;&#125;&quot;&lt;&#x2F;p&gt;</span><br><span class="line">  &lt;p&gt;Computed reversed message: &quot;&#123;&#123; reversedMessage &#125;&#125;&quot;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">var vm &#x3D; new Vue(&#123;</span><br><span class="line">  el: &#39;#example&#39;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    message: &#39;Hello&#39;</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    &#x2F;&#x2F; 计算属性的 getter</span><br><span class="line">    reversedMessage: function () &#123;</span><br><span class="line">      &#x2F;&#x2F; &#96;this&#96; 指向 vm 实例</span><br><span class="line">      return this.message.split(&#39;&#39;).reverse().join(&#39;&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>在这里相信大家会发现，这个computed和method的功能一样，也是一个函数；对的，我们用method也可以实现这种效果。例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;example&quot;&gt;</span><br><span class="line">  &lt;p&gt;Computed reversed message: &quot;&#123;&#123; reversedMessage() &#125;&#125;&quot;&lt;&#x2F;p&gt; </span><br><span class="line">	&#x2F;* 直接对函数进行调用*&#x2F;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">var vm &#x3D; new Vue(&#123;</span><br><span class="line">  el: &#39;#example&#39;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    message: &#39;Hello&#39;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    reversedMessage: function () &#123;</span><br><span class="line">      return this.message.split(&#39;&#39;).reverse().join(&#39;&#39;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>可以看到二者的效果是一样的，但是其实二者还是有区别的</p>
+<h3 id="computed和method的区别"><a href="#computed和method的区别" class="headerlink" title="computed和method的区别"></a>computed和method的区别</h3><ol>
+<li><p>computed具有响应式（双向数据绑定），以属性方式调用，如：this.reversedMessage</p>
+</li>
+<li><p>methods需以函数方式调用，如：this.reversedMessage()</p>
+</li>
+<li><p><strong>computed具有缓存功能，只要里面的数据不发生改变，就不会重新计算；methods每次调用都重新计算一次</strong>，也就是说使用了computed只有它们计算依赖的值发生变化的时候才会进行重新计算，这样大大提高了性能。相比之下，每当触发重新渲染时，method将<strong>总会</strong>再次执行函数。</p>
+<p>这里要注意的一点是，Date.now()将会在执行一次以后失去作用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  now: function () &#123;</span><br><span class="line">    return Date.now()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="computed的触发变化条件"><a href="#computed的触发变化条件" class="headerlink" title="computed的触发变化条件"></a>computed的触发变化条件</h3><ol>
+<li>触发条件是内部计算的数据发生改变</li>
+<li>内部的数据必须是响应式的数据，普通数据vue无法知道是否有变化</li>
+</ol>
+<h5 id="例子1："><a href="#例子1：" class="headerlink" title="例子1："></a>例子1：</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">&lt;div @click&#x3D;&quot;change&quot;&gt;&#123;&#123;b&#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;&lt;script&gt;</span><br><span class="line">let a &#x3D; &#123;value: 1&#125;;</span><br><span class="line">export default &#123;</span><br><span class="line">	computed: &#123;</span><br><span class="line">		b() &#123;</span><br><span class="line">			return a.value;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">	methods: &#123;</span><br><span class="line">		change() &#123;</span><br><span class="line">			a.value &#x3D; 2;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在点击之后会返回什么值？</p>
+<p>答案：点击前是1，点击后也是1</p>
+<p>​            原因很简单，a不是一个响应式的值，没有被vue劫持，所有数据改变时vue并不知道，所已没有触发b的更新</p>
+<h5 id="例子2："><a href="#例子2：" class="headerlink" title="例子2："></a>例子2：</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;div @click&#x3D;&quot;change&quot;&gt;&#123;&#123;b&#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">	data() &#123;</span><br><span class="line">		return &#123;</span><br><span class="line">			a: &#123;value: 1&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">	computed: &#123;</span><br><span class="line">		b() &#123;</span><br><span class="line">			return this.a.value;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">	methods: &#123;</span><br><span class="line">		change() &#123;</span><br><span class="line">			this.a.value &#x3D; 2;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>答案：点击后，触发了change，把a.value改为2，因为a是在data函数里，data函数里的数据是被vue劫持的，具有响应式，所以会触发计算属性b的更新。</p>
+<h3 id="computed的settter"><a href="#computed的settter" class="headerlink" title="computed的settter"></a>computed的settter</h3><p>在computed属性中同样为我们提供了setter-getter方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;*来自官方文档的例子*&#x2F;</span><br><span class="line">computed: &#123;</span><br><span class="line">  fullName: &#123;</span><br><span class="line">    &#x2F;&#x2F; getter</span><br><span class="line">    get: function () &#123;</span><br><span class="line">      return this.firstName + &#39; &#39; + this.lastName</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; setter</span><br><span class="line">    set: function (newValue) &#123;</span><br><span class="line">      var names &#x3D; newValue.split(&#39; &#39;)</span><br><span class="line">      this.firstName &#x3D; names[0]</span><br><span class="line">      this.lastName &#x3D; names[names.length - 1]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>简单理解就是:</p>
+<p>setter()：用来设置成员变量，可以在方法里面过滤掉一些不合理的值</p>
+<ul>
+<li>必须是对象方法</li>
+<li>返回值类型为void</li>
+<li>方法名以set开头</li>
+<li>必须提供一个参数，参数类型必须与所对应的成员变量的类型一致</li>
+</ul>
+<p>getter()：为调用者返回对象内部的成员变量的值</p>
+<ul>
+<li>必须是对象方法</li>
+<li>必须有返回值,返回值的类型和成员变量的类型一致</li>
+<li>方法名必须是成员变量去掉下划线</li>
+<li>一定是没有参数的</li>
+</ul>
+<h5 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  fullName: &#123;</span><br><span class="line">    &#x2F;&#x2F; getter</span><br><span class="line">    get: function () &#123;</span><br><span class="line">      return this.firstName + &#39; &#39; + this.lastName</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; setter</span><br><span class="line">    set: function (newValue) &#123;</span><br><span class="line">      var names &#x3D; newValue.split(&#39; &#39;)</span><br><span class="line">      this.firstName &#x3D; names[0]</span><br><span class="line">      this.lastName &#x3D; names[names.length - 1]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到getter只是对原本值的处理后返回；而setter则会重新设置值</p>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><ol>
+<li>computed用来监控自己定义的变量，该变量不在data里面声明，直接在computed里面定义，然后就可以在页面上进行双向数据绑定展示出结果或者用作其他处理；</li>
+<li>computed比较适合对多个变量或者对象进行处理后返回一个结果值，也就是数多个变量中的某一个值发生了变化则我们监控的这个值也就会发生变化，举例：购物车里面的商品列表和总金额之间的关系，只要商品列表里面的商品数量发生变化，或减少或增多或删除商品，总金额都应该发生变化。这里的这个总金额使用computed属性来进行计算是最好的选择</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Vue</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
 </search>
