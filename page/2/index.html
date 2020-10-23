@@ -283,6 +283,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://FrankieQi.github.io/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="FrankieQi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Frankie Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/" itemprop="url">Vue实现刷新当前页面，重载页面数据</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-13T15:36:39+08:00">
+                2020-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  505
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前几天在做个人播放器项目时，遇到一个问题：在进行搜索功能时，第一次搜索后，在搜素界面再次搜索时，发现搜索完成只是hash地址发生的转换，但是页面的数据并没有发生转换，也就是没能触发组件的刷新，由于搜索框的组件和搜索内容的组件二者之间不是父子组件也不是兄弟组件，很难实现数据交互。在苦恼许久查阅文档和百度搜索后，成功解决，给出以下解决方案给予参考。</p>
+<p>该方案的应用场景可用于一些需要刷新页面，重载数据时，比如：在管理后台，在执行完，增，删，改，操作的时候等等。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://FrankieQi.github.io/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2063,194 +2251,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://FrankieQi.github.io/2020/04/15/HTML-CSS%E5%AE%9E%E7%8E%B0%E6%98%8E%E6%98%9F%E5%8D%A1%E7%89%87%E5%88%B6%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="FrankieQi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/touxiang.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Frankie Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/15/HTML-CSS%E5%AE%9E%E7%8E%B0%E6%98%8E%E6%98%9F%E5%8D%A1%E7%89%87%E5%88%B6%E4%BD%9C/" itemprop="url">HTML+CSS实现明星卡片制作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-15T12:30:27+08:00">
-                2020-04-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSS/" itemprop="url" rel="index">
-                    <span itemprop="name">CSS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2020/04/15/HTML-CSS%E5%AE%9E%E7%8E%B0%E6%98%8E%E6%98%9F%E5%8D%A1%E7%89%87%E5%88%B6%E4%BD%9C/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2020/04/15/HTML-CSS%E5%AE%9E%E7%8E%B0%E6%98%8E%E6%98%9F%E5%8D%A1%E7%89%87%E5%88%B6%E4%BD%9C/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.9k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="HTML-CSS实现明星卡片制作"><a href="#HTML-CSS实现明星卡片制作" class="headerlink" title="HTML+CSS实现明星卡片制作"></a>HTML+CSS实现明星卡片制作</h2><p>今天在B站偶然刷到一个视频，点击跳转，视频是制作一张折叠卡片，觉得效果很不错，并且对CSS3和HTML5都能进一步学习和复习，所以仿作一个易烊千玺卡片，喜欢的小伙伴一起动手做起来叭。</p>
-<h4 id="效果实现"><a href="#效果实现" class="headerlink" title="效果实现"></a>效果实现</h4><p>卡片的首页是一张图片</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/15/HTML-CSS%E5%AE%9E%E7%8E%B0%E6%98%8E%E6%98%9F%E5%8D%A1%E7%89%87%E5%88%B6%E4%BD%9C/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2305,7 +2305,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
