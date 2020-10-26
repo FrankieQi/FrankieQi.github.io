@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Vue," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,17 +79,23 @@
 
 
 
-<meta name="description" content="前言前几天在做个人播放器项目时，遇到一个问题：在进行搜索功能时，第一次搜索后，在搜素界面再次搜索时，发现搜索完成只是hash地址发生的转换，但是页面的数据并没有发生转换，也就是没能触发组件的刷新，由于搜索框的组件和搜索内容的组件二者之间不是父子组件也不是兄弟组件，很难实现数据交互。在苦恼许久查阅文档和百度搜索后，成功解决，给出以下解决方案给予参考。 该方案的应用场景可用于一些需要刷新页面，重载数据">
+<meta name="description" content="写在前面更新了很多篇JavaScript和vue的文章啦，今天久违和大家分享以下css的知识点。也是我以前在第一次面试的时候被面试官问倒的问题，希望可以帮助到各位小伙伴。在css中有一个margin属性相信大家都比较的熟悉，但有一些细节还是需要和大家分享学习的。 属性的定义及使用 作用：首先不管是在IE盒模型下还是w3c标准盒模型下都是在盒子的最外层，作用就是和其他的盒子之间“顶开”出来，让盒子之">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vue实现刷新当前页面，重载页面数据">
-<meta property="og:url" content="https://frankieqi.github.io/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/index.html">
+<meta property="og:title" content="CSS的margin属性浅析">
+<meta property="og:url" content="https://frankieqi.github.io/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/index.html">
 <meta property="og:site_name" content="Frankie Blog">
-<meta property="og:description" content="前言前几天在做个人播放器项目时，遇到一个问题：在进行搜索功能时，第一次搜索后，在搜素界面再次搜索时，发现搜索完成只是hash地址发生的转换，但是页面的数据并没有发生转换，也就是没能触发组件的刷新，由于搜索框的组件和搜索内容的组件二者之间不是父子组件也不是兄弟组件，很难实现数据交互。在苦恼许久查阅文档和百度搜索后，成功解决，给出以下解决方案给予参考。 该方案的应用场景可用于一些需要刷新页面，重载数据">
-<meta property="article:published_time" content="2020-07-13T07:36:39.000Z">
-<meta property="article:modified_time" content="2020-07-13T16:41:00.466Z">
+<meta property="og:description" content="写在前面更新了很多篇JavaScript和vue的文章啦，今天久违和大家分享以下css的知识点。也是我以前在第一次面试的时候被面试官问倒的问题，希望可以帮助到各位小伙伴。在css中有一个margin属性相信大家都比较的熟悉，但有一些细节还是需要和大家分享学习的。 属性的定义及使用 作用：首先不管是在IE盒模型下还是w3c标准盒模型下都是在盒子的最外层，作用就是和其他的盒子之间“顶开”出来，让盒子之">
+<meta property="og:image" content="https://frankieqi.github.io/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026172607910.png">
+<meta property="og:image" content="https://frankieqi.github.io/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026190231442.png">
+<meta property="og:image" content="https://frankieqi.github.io/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026190940887.png">
+<meta property="og:image" content="https://frankieqi.github.io/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026193551116.png">
+<meta property="og:image" content="https://frankieqi.github.io/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026194106762.png">
+<meta property="og:image" content="https://frankieqi.github.io/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026194624525.png">
+<meta property="article:published_time" content="2020-10-26T15:10:49.000Z">
+<meta property="article:modified_time" content="2020-10-26T15:19:33.421Z">
 <meta property="article:author" content="FrankieQi">
-<meta property="article:tag" content="Vue">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://frankieqi.github.io/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026172607910.png">
 
 
 
@@ -119,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://FrankieQi.github.io/2020/07/13/Vue实现刷新当前页面，重载页面数据/"/>
+  <link rel="canonical" href="https://FrankieQi.github.io/2020/10/26/CSS的margin属性浅析/"/>
 
 
 
 
 
-  <title>Vue实现刷新当前页面，重载页面数据 | Frankie Blog</title>
+  <title>CSS的margin属性浅析 | Frankie Blog</title>
   
 
 
@@ -287,7 +293,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://FrankieQi.github.io/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/">
+    <link itemprop="mainEntityOfPage" href="https://FrankieQi.github.io/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="FrankieQi">
@@ -304,7 +310,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Vue实现刷新当前页面，重载页面数据</h1>
+          <h1 class="post-title" itemprop="name headline">CSS的margin属性浅析</h1>
         
 
         <div class="post-meta">
@@ -316,8 +322,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-13T15:36:39+08:00">
-                2020-07-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-26T23:10:49+08:00">
+                2020-10-26
               </time>
             
 
@@ -327,28 +333,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -357,8 +341,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2020/07/13/Vue%E5%AE%9E%E7%8E%B0%E5%88%B7%E6%96%B0%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%87%8D%E8%BD%BD%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE/" itemprop="commentCount"></span>
+                <a href="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -385,7 +369,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  505
+                  1.2k
                 </span>
               
 
@@ -401,7 +385,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  5
                 </span>
               
             </div>
@@ -422,18 +406,91 @@
       
 
       
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>前几天在做个人播放器项目时，遇到一个问题：在进行搜索功能时，第一次搜索后，在搜素界面再次搜索时，发现搜索完成只是hash地址发生的转换，但是页面的数据并没有发生转换，也就是没能触发组件的刷新，由于搜索框的组件和搜索内容的组件二者之间不是父子组件也不是兄弟组件，很难实现数据交互。在苦恼许久查阅文档和百度搜索后，成功解决，给出以下解决方案给予参考。</p>
-<p>该方案的应用场景可用于一些需要刷新页面，重载数据时，比如：在管理后台，在执行完，增，删，改，操作的时候等等。</p>
+        <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>更新了很多篇JavaScript和vue的文章啦，今天久违和大家分享以下css的知识点。也是我以前在第一次面试的时候被面试官问倒的问题，希望可以帮助到各位小伙伴。在css中有一个margin属性相信大家都比较的熟悉，但有一些细节还是需要和大家分享学习的。</p>
+<h4 id="属性的定义及使用"><a href="#属性的定义及使用" class="headerlink" title="属性的定义及使用"></a>属性的定义及使用</h4><ol>
+<li><strong>作用</strong>：首先不管是在IE盒模型下还是w3c标准盒模型下都是在盒子的最外层，作用就是和其他的盒子之间“顶开”出来，让盒子之间存在距离。如下图所示：</li>
+</ol>
+<p><img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026172607910.png" alt="image-20201026172607910"></p>
 <a id="more"></a>
-<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>需要用到一个 <a href="https://cn.vuejs.org/v2/api/#provide-inject" target="_blank" rel="noopener">provide / inject</a> 这对用例。这对选项需要一起使用，以允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效</p>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>在根组件中，也就是App.vue中写如下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id&#x3D;&quot;app&quot;&gt;</span><br><span class="line">        &lt;router-view v-if&#x3D;&quot;isRouterAlive&quot;&gt;&lt;&#x2F;router-view&gt;</span><br><span class="line">      	&lt;index v-if&#x3D;&quot;isRouterAlive&quot;&#x2F;&gt;</span><br><span class="line">      &#x2F;*只要是组件想要刷新的主要在组件中加上v-if&#x3D;&quot;isRouterAlive&quot;即可*&#x2F;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"> </span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;App&#39;,</span><br><span class="line">  provide ()&#123;</span><br><span class="line">     return &#123;</span><br><span class="line">       reload:this.reload</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  data()&#123;</span><br><span class="line">    return &#123;</span><br><span class="line">       isRouterAlive:true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods:&#123;</span><br><span class="line">    reload ()&#123;</span><br><span class="line">       this.isRouterAlive &#x3D; false</span><br><span class="line">       this.$nextTick(function()&#123;</span><br><span class="line">          this.isRouterAlive &#x3D; true</span><br><span class="line">       &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  components:&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p><strong>属性</strong>：这个不需要多讲，就是简单的上右下左<br>但是简写还是需要和大家简单说明一下的<br><strong>margin:10px 5px 15px 20px;</strong>：</p>
+<ul>
+<li>上边距是 10px<br>右边距是 5px<br>下边距是 15px<br>左边距是 20px</li>
+</ul>
+<p><strong>margin:10px 5px 15px;</strong></p>
+<ul>
+<li>上边距是 10px<br>右边距和左边距是 5px<br>下边距是 15px</li>
+</ul>
+<p><strong>margin:10px 5px;</strong></p>
+<ul>
+<li>上边距和下边距是 10px<br>右边距和左边距是 5px</li>
+</ul>
+<p><strong>margin:10px;</strong></p>
+<ul>
+<li>所有四个边距都是 10px</li>
+</ul>
+</li>
+</ol>
+<h4 id="外边距塌陷"><a href="#外边距塌陷" class="headerlink" title="外边距塌陷"></a>外边距塌陷</h4><ol>
+<li><p>接下来讲讲重点就是外边距的塌陷问题</p>
+<p>原因：外边距塌陷也称为外边距合并，是指两个在正常流中相邻（兄弟或父子关系）的块级元素的外边距，组合在一起变成单个外边距，不过只有上下外边距才会有塌陷，左右外边距不会出现这种问题。</p>
+</li>
+</ol>
+<p>例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.a</span> &#123;</span></span><br><span class="line">            float: left; </span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: bisque;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.b</span> &#123;</span></span><br><span class="line">            float: left;</span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: blue;</span><br><span class="line">            margin-top: 20px;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"a"</span>&gt;</span></span><br><span class="line">   	 	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"b"</span>&gt;</span>456<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>在触发的子组件中引用即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">export default&#123;</span><br><span class="line">	inject:[&#39;reload&#39;],</span><br><span class="line">	data()&#123;</span><br><span class="line">		return&#123;</span><br><span class="line">			inputValue:&#39;&#39;</span><br><span class="line">	 &#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	method:&#123;</span><br><span class="line">		toResult()&#123;</span><br><span class="line">		this.reload()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果如图：<img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026190231442.png" alt="image-20201026190231442"></p>
+<p>很明显我们想要的结果并不是这样的，我们想要的是蓝盒子的距离他的父盒子有20px的距离，而我们却发现父盒子也一起掉了下来，这就是我们常说的外边距塌陷问题。</p>
+<p><strong>解决这个问题的方法：</strong></p>
+<p>（1）给父盒子加上上 边框，如果不想要看到边框可以把边框的像素设置成零也就是：</p>
+<p>​        <code>border:0px dash #fff</code></p>
+<p>（2）给父盒子加上<code>overflow:hidden</code>让父盒子形成BFC也可以解决这个问题</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.a</span> &#123;</span></span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: bisque;</span><br><span class="line">            overflow: hidden;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.b</span> &#123;</span></span><br><span class="line">            width: 50px;</span><br><span class="line">            height: 50px;</span><br><span class="line">            background-color: blue;</span><br><span class="line">            margin-top: 20px;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>Tip: 只需要在子组件中引入inject:[‘reload’]；然后调用reload()方法即可实现刷新；是不是很简单方便~~</p>
-<p>在此分享给大家</p>
+
+
+<p>可以看到这就是我们想要的效果了<img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026190940887.png" alt="image-20201026190940887"></p>
+<ol start="2">
+<li><p>还有一种情况就是：当父子都有margin值的时候，以margin值大的为主</p>
+<p>例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.a</span> &#123;</span></span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: bisque;</span><br><span class="line">            margin-top: 50px;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.b</span> &#123;</span></span><br><span class="line">            width: 50px;</span><br><span class="line">            height: 50px;</span><br><span class="line">            background-color: blue;</span><br><span class="line">            margin-top: 100px;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"a"</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"b"</span>&gt;</span>456<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>此时的距离顶部的距离是100px，而不是50px</p>
+</li>
+</ol>
+<h4 id="外边距重叠问题"><a href="#外边距重叠问题" class="headerlink" title="外边距重叠问题"></a>外边距重叠问题</h4><ol>
+<li><p>上面讲的是父子盒子间的外边距问题，接下来讲讲兄弟盒子盒子间的重叠问题</p>
+</li>
+<li><p><strong>在兄弟盒子之间的外边距上，垂直外边距会有问题但水平兄弟盒子不会有重叠问题</strong></p>
+</li>
+<li><p><strong>垂直兄弟盒子的计算方式是：</strong></p>
+<p><strong>1.两个都是正数，取较大的值</strong><br><strong>2.两个都是负数，取绝对值较大的值</strong><br><strong>3.一正一负，取两个值得和</strong></p>
+</li>
+</ol>
+<p>例如1：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.a</span> &#123;</span></span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: bisque;</span><br><span class="line">            margin-bottom: 50px;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.b</span> &#123;</span></span><br><span class="line">            width: 50px;</span><br><span class="line">            height: 50px;</span><br><span class="line">            background-color: blue;</span><br><span class="line">            margin-top: 100px;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"a"</span>&gt;</span>    </span><br><span class="line">       123</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"b"</span>&gt;</span>456<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026193551116.png" alt="image-20201026193551116"></p>
+<p>可以看到它们之间的距离并不是我们预想中的150px而是100px</p>
+<p>例如2：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.a &#123;</span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: bisque;</span><br><span class="line">            margin-bottom: 150px;</span><br><span class="line">        &#125;</span><br><span class="line">        .b &#123;</span><br><span class="line">            width: 50px;</span><br><span class="line">            height: 50px;</span><br><span class="line">            background-color: blue;</span><br><span class="line">            margin-top: -100px;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026194106762.png" alt="image-20201026194106762"></p>
+<p>可以看到它们之间的距离就成了50px</p>
+<p>例子3：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.a &#123;</span><br><span class="line">           float: left;</span><br><span class="line">           width: 100px;</span><br><span class="line">           height: 100px;</span><br><span class="line">           background-color: bisque;</span><br><span class="line">           margin-right: 150px;</span><br><span class="line">       &#125;</span><br><span class="line">       .b &#123;</span><br><span class="line">           float: left;</span><br><span class="line">           width: 50px;</span><br><span class="line">           height: 50px;</span><br><span class="line">           background-color: blue;</span><br><span class="line">           margin-left: 50px;</span><br><span class="line">           </span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026194624525.png" alt="image-20201026194624525"></p>
+<p>可以看到相邻的兄弟元素并不会受影响。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>在使用margin属性的时候要注意以下问题：</p>
+<ul>
+<li><p>当为父子盒子时：子盒子在使用margin属性的时候会有外边距塌陷的情况，要使用overflow：hidden或者父元素加上边框解决。</p>
+</li>
+<li><p>当为兄弟组件的时：垂直兄弟组件会存在外边距重叠问题，要主要好它们之间的实际距离，解决办法可以是给其中一个设置想要的margin宽度即可；而相邻兄弟组件则不存在这种问题，可以放心的使用。</p>
+</li>
+</ul>
 
       
     </div>
@@ -449,12 +506,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Vue/" rel="tag"><i class="fa fa-tag" aria-hidden="true"></i> Vue</a>
-          
-        </div>
-      
 
       
       
@@ -464,8 +515,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/08/canvas%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8A%A8%E6%80%81%E6%97%B6%E9%92%9F%E5%AE%9E%E7%8E%B0/" rel="next" title="canvas的基本使用和动态时钟实现">
-                <i class="fa fa-chevron-left"></i> canvas的基本使用和动态时钟实现
+              <a href="/2020/10/23/Promise%E4%B8%AD%E7%9A%84all%E5%92%8Crace/" rel="next" title="Promise中的all和race">
+                <i class="fa fa-chevron-left"></i> Promise中的all和race
               </a>
             
           </div>
@@ -473,10 +524,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/07/14/%E6%A6%82%E8%BF%B0TCP-IP%E5%8D%8F%E8%AE%AE%E5%8F%8A%E5%85%B6%E4%B8%89%E6%8F%A1%E5%9B%9B%E6%8C%A5/" rel="prev" title="概述TCP/IP协议及其三握四挥">
-                概述TCP/IP协议及其三握四挥 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -643,7 +690,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性的定义及使用"><span class="nav-number">2.</span> <span class="nav-text">属性的定义及使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外边距塌陷"><span class="nav-number">3.</span> <span class="nav-text">外边距塌陷</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外边距重叠问题"><span class="nav-number">4.</span> <span class="nav-text">外边距重叠问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

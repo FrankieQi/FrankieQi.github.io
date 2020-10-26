@@ -2097,4 +2097,94 @@
         <tag>JavaScript</tag>
       </tags>
   </entry>
+  <entry>
+    <title>CSS的margin属性浅析</title>
+    <url>/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/</url>
+    <content><![CDATA[<h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>更新了很多篇JavaScript和vue的文章啦，今天久违和大家分享以下css的知识点。也是我以前在第一次面试的时候被面试官问倒的问题，希望可以帮助到各位小伙伴。在css中有一个margin属性相信大家都比较的熟悉，但有一些细节还是需要和大家分享学习的。</p>
+<h4 id="属性的定义及使用"><a href="#属性的定义及使用" class="headerlink" title="属性的定义及使用"></a>属性的定义及使用</h4><ol>
+<li><strong>作用</strong>：首先不管是在IE盒模型下还是w3c标准盒模型下都是在盒子的最外层，作用就是和其他的盒子之间“顶开”出来，让盒子之间存在距离。如下图所示：</li>
+</ol>
+<p><img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026172607910.png" alt="image-20201026172607910"></p>
+<a id="more"></a>
+<ol start="2">
+<li><p><strong>属性</strong>：这个不需要多讲，就是简单的上右下左<br>但是简写还是需要和大家简单说明一下的<br><strong>margin:10px 5px 15px 20px;</strong>：</p>
+<ul>
+<li>上边距是 10px<br>右边距是 5px<br>下边距是 15px<br>左边距是 20px</li>
+</ul>
+<p><strong>margin:10px 5px 15px;</strong></p>
+<ul>
+<li>上边距是 10px<br>右边距和左边距是 5px<br>下边距是 15px</li>
+</ul>
+<p><strong>margin:10px 5px;</strong></p>
+<ul>
+<li>上边距和下边距是 10px<br>右边距和左边距是 5px</li>
+</ul>
+<p><strong>margin:10px;</strong></p>
+<ul>
+<li>所有四个边距都是 10px</li>
+</ul>
+</li>
+</ol>
+<h4 id="外边距塌陷"><a href="#外边距塌陷" class="headerlink" title="外边距塌陷"></a>外边距塌陷</h4><ol>
+<li><p>接下来讲讲重点就是外边距的塌陷问题</p>
+<p>原因：外边距塌陷也称为外边距合并，是指两个在正常流中相邻（兄弟或父子关系）的块级元素的外边距，组合在一起变成单个外边距，不过只有上下外边距才会有塌陷，左右外边距不会出现这种问题。</p>
+</li>
+</ol>
+<p>例如：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.a</span> &#123;</span></span><br><span class="line">            float: left; </span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: bisque;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.b</span> &#123;</span></span><br><span class="line">            float: left;</span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: blue;</span><br><span class="line">            margin-top: 20px;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"a"</span>&gt;</span></span><br><span class="line">   	 	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"b"</span>&gt;</span>456<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>结果如图：<img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026190231442.png" alt="image-20201026190231442"></p>
+<p>很明显我们想要的结果并不是这样的，我们想要的是蓝盒子的距离他的父盒子有20px的距离，而我们却发现父盒子也一起掉了下来，这就是我们常说的外边距塌陷问题。</p>
+<p><strong>解决这个问题的方法：</strong></p>
+<p>（1）给父盒子加上上 边框，如果不想要看到边框可以把边框的像素设置成零也就是：</p>
+<p>​        <code>border:0px dash #fff</code></p>
+<p>（2）给父盒子加上<code>overflow:hidden</code>让父盒子形成BFC也可以解决这个问题</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.a</span> &#123;</span></span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: bisque;</span><br><span class="line">            overflow: hidden;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.b</span> &#123;</span></span><br><span class="line">            width: 50px;</span><br><span class="line">            height: 50px;</span><br><span class="line">            background-color: blue;</span><br><span class="line">            margin-top: 20px;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>可以看到这就是我们想要的效果了<img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026190940887.png" alt="image-20201026190940887"></p>
+<ol start="2">
+<li><p>还有一种情况就是：当父子都有margin值的时候，以margin值大的为主</p>
+<p>例如：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.a</span> &#123;</span></span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: bisque;</span><br><span class="line">            margin-top: 50px;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.b</span> &#123;</span></span><br><span class="line">            width: 50px;</span><br><span class="line">            height: 50px;</span><br><span class="line">            background-color: blue;</span><br><span class="line">            margin-top: 100px;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"a"</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"b"</span>&gt;</span>456<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>此时的距离顶部的距离是100px，而不是50px</p>
+</li>
+</ol>
+<h4 id="外边距重叠问题"><a href="#外边距重叠问题" class="headerlink" title="外边距重叠问题"></a>外边距重叠问题</h4><ol>
+<li><p>上面讲的是父子盒子间的外边距问题，接下来讲讲兄弟盒子盒子间的重叠问题</p>
+</li>
+<li><p><strong>在兄弟盒子之间的外边距上，垂直外边距会有问题但水平兄弟盒子不会有重叠问题</strong></p>
+</li>
+<li><p><strong>垂直兄弟盒子的计算方式是：</strong></p>
+<p><strong>1.两个都是正数，取较大的值</strong><br><strong>2.两个都是负数，取绝对值较大的值</strong><br><strong>3.一正一负，取两个值得和</strong></p>
+</li>
+</ol>
+<p>例如1：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.a</span> &#123;</span></span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: bisque;</span><br><span class="line">            margin-bottom: 50px;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.b</span> &#123;</span></span><br><span class="line">            width: 50px;</span><br><span class="line">            height: 50px;</span><br><span class="line">            background-color: blue;</span><br><span class="line">            margin-top: 100px;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"a"</span>&gt;</span>    </span><br><span class="line">       123</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"b"</span>&gt;</span>456<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026193551116.png" alt="image-20201026193551116"></p>
+<p>可以看到它们之间的距离并不是我们预想中的150px而是100px</p>
+<p>例如2：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">.a &#123;</span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line">            background-color: bisque;</span><br><span class="line">            margin-bottom: 150px;</span><br><span class="line">        &#125;</span><br><span class="line">        .b &#123;</span><br><span class="line">            width: 50px;</span><br><span class="line">            height: 50px;</span><br><span class="line">            background-color: blue;</span><br><span class="line">            margin-top: -100px;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026194106762.png" alt="image-20201026194106762"></p>
+<p>可以看到它们之间的距离就成了50px</p>
+<p>例子3：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">.a &#123;</span><br><span class="line">           float: left;</span><br><span class="line">           width: 100px;</span><br><span class="line">           height: 100px;</span><br><span class="line">           background-color: bisque;</span><br><span class="line">           margin-right: 150px;</span><br><span class="line">       &#125;</span><br><span class="line">       .b &#123;</span><br><span class="line">           float: left;</span><br><span class="line">           width: 50px;</span><br><span class="line">           height: 50px;</span><br><span class="line">           background-color: blue;</span><br><span class="line">           margin-left: 50px;</span><br><span class="line">           </span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/26/CSS%E7%9A%84margin%E5%B1%9E%E6%80%A7%E6%B5%85%E6%9E%90/image-20201026194624525.png" alt="image-20201026194624525"></p>
+<p>可以看到相邻的兄弟元素并不会受影响。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>在使用margin属性的时候要注意以下问题：</p>
+<ul>
+<li><p>当为父子盒子时：子盒子在使用margin属性的时候会有外边距塌陷的情况，要使用overflow：hidden或者父元素加上边框解决。</p>
+</li>
+<li><p>当为兄弟组件的时：垂直兄弟组件会存在外边距重叠问题，要主要好它们之间的实际距离，解决办法可以是给其中一个设置想要的margin宽度即可；而相邻兄弟组件则不存在这种问题，可以放心的使用。</p>
+</li>
+</ul>
+]]></content>
+  </entry>
 </search>
